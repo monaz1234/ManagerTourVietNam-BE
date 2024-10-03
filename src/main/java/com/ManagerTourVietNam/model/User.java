@@ -3,47 +3,102 @@ package com.ManagerTourVietNam.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String username;
-    private String password;
-    private String role;
+    // hàm tự tăng
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String iduser;
+    private String name;
+    private Date birth;
+    private String email;
+    private String phone;
+    private int points;
+    private int salary;
+    private int reward;
+    private boolean status;
 
 
-
-    public int getId() {
-        return id;
+    public String getIduser() {
+        return iduser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIduser(String iduser) {
+        this.iduser = iduser;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
-    public String getRole() {
-        return role;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+
+
+
+
+
+
+
 }
