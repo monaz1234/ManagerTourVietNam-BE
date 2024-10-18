@@ -19,7 +19,8 @@ public class User {
     private int points;
     private int salary;
     private int reward;
-    private boolean status;
+    private int status;
+
 
 
     public String getIduser() {
@@ -86,12 +87,12 @@ public class User {
         this.reward = reward;
     }
 
-    public boolean isStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
-    
+
 }
