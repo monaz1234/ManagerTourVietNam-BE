@@ -35,7 +35,7 @@ public class UserService {
             user.setPoints(userDetails.getPoints());
             user.setReward(userDetails.getReward());
             user.setSalary(userDetails.getSalary());
-            user.setStatus(userDetails.isStatus());
+            user.setStatus(userDetails.getStatus());
             return userRepository.save(user);
         }
         return null;
