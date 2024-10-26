@@ -10,8 +10,27 @@ public class Type_user {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idtypeuser;
     private String name_type;
-    private boolean status;
+    private int status;
+    private int Salary;
     private int power;
+
+    public int getSalary() {
+        return Salary;
+    }
+
+    public void setSalary(int salary) {
+        Salary = salary;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
 
     public String getIdtypeuser() {
         return idtypeuser;
@@ -29,13 +48,9 @@ public class Type_user {
         this.name_type = name_type;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+
+
 
     public int getPower() {
         return power;
