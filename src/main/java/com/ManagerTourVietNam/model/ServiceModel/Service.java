@@ -2,12 +2,14 @@ package com.ManagerTourVietNam.model.ServiceModel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jdk.jfr.Enabled;
 
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+@Table (name="service")
 public class Service {
     @Id
     private String id_service;
@@ -66,6 +68,7 @@ public class Service {
         this.status = status;
     }
 
+
     public String getDescription() {
         return description;
     }
@@ -85,11 +88,16 @@ public class Service {
         this.status = status;
     }
 
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id_service='" + id_service + '\'' +
+                ", name_service='" + name_service + '\'' +
+                ", description='" + description + '\'' +
+                ", time_start=" + time_start +
+                ", time_end=" + time_end +
+                ", plant='" + plant + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
