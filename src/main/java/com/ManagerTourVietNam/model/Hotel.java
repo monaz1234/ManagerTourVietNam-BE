@@ -12,7 +12,7 @@ public class Hotel {
     private String room;
     private String type_room;
     private String image;
-    private Integer status;
+    private Boolean status;
 
     public String getId_hotel() {
         return id_hotel;
@@ -62,11 +62,11 @@ public class Hotel {
         this.image = image;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }
