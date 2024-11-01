@@ -40,4 +40,17 @@ public class PaymentMethodController {
         paymentMethodService.deletePaymentMethod(id);
     }
 
+    // add payment
+    @PostMapping("/payment/add_payment")
+    public ResponseEntity<PaymentMethod> addPaymentMethod(@RequestBody PaymentMethod paymentMethod)
+    {
+        return  paymentMethodService.addPaymentMethod(paymentMethod);
+    }
+    //toggle status
+    @PostMapping("/payment/toggle_status/{id}")
+    public ResponseEntity<PaymentMethod> togglePaymentMethodStatus(@PathVariable String id)
+    {
+        return paymentMethodService.togglePaymentMethodStatus(id);
+    }
+
 }
