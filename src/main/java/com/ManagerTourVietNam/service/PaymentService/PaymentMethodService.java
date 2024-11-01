@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.dao.DataIntegrityViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,6 @@ public class PaymentMethodService {
         return paymentRepository.findById(id);
     }
     // update
-
     public ResponseEntity<PaymentMethod> updatePaymentMethod (String id, PaymentMethod PaymentDetail) {
         Optional<PaymentMethod> optionalPaymentMethod = paymentRepository.findById(id);
 
@@ -46,7 +46,41 @@ public class PaymentMethodService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    // xóa payment theo id
     public void deletePaymentMethod(String id){
         paymentRepository.deleteById(id);
+    }
+    // thêm phương thức thanh toán
+    public ResponseEntity<PaymentMethod> addPaymentMethod(PaymentMethod paymentMethod) {
+        if (paymentMethod.getId_method() == null ||
+                paymentMethod.getPayment_code() == null ||
+                paymentMethod.getPayment_name() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try {
+            // Lưu phương thức thanh toán vào cơ sở dữ liệu
+            PaymentMethod createdPaymentMethod = paymentRepository.save(paymentMethod);
+            return new ResponseEntity<>(createdPaymentMethod, HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException e) {
+            // Xử lý lỗi vi phạm ràng buộc dữ liệu (ví dụ: trùng lặp khóa chính)
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            // Xử lý lỗi chung
+            e.printStackTrace(); // In lỗi ra console để kiểm tra
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    // kích hoạt / vô hiệu hóa phương thức thanh toán theo id payement method
+    public ResponseEntity<PaymentMethod> togglePaymentMethodStatus(String id)
+    {
+        Optional<PaymentMethod> optionalPaymentMethod = paymentRepository.findById(id);
+        if(optionalPaymentMethod.isPresent())
+        {
+            PaymentMethod paymentMethod = optionalPaymentMethod.get();
+            paymentMethod.setIs_active(!paymentMethod.isIs_active());
+            PaymentMethod updatedPaymentMethod = paymentRepository.save(paymentMethod);
+            return new ResponseEntity<>(updatedPaymentMethod,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
