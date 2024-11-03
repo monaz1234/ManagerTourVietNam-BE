@@ -27,7 +27,6 @@ public class Type_UserService {
         if (optionalTypeUser.isPresent()){
             Type_user type_user1 = optionalTypeUser.get();
             type_user1.setName_type(typeUser12.getName_type());
-            type_user1.setPower(typeUser12.getPower());
             type_user1.setStatus(type_user1.getStatus());
             type_user1.setSalary(typeUser12.getSalary());
             return typeUserRepository.save(type_user1);
