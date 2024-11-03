@@ -12,7 +12,7 @@ public class Type_user {
     private String name_type;
     private int status;
     private int Salary;
-    private int power;
+
 
     public int getSalary() {
         return Salary;
@@ -46,17 +46,5 @@ public class Type_user {
 
     public void setName_type(String name_type) {
         this.name_type = name_type;
-    }
-
-
-
-
-
-    public int getPower() {
-        return power;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
     }
 }
