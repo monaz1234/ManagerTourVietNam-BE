@@ -2,16 +2,28 @@ package com.ManagerTourVietNam.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "type_user")
+@Table(name = "TYPE_USER")
 public class Type_user {
     @Id
     // hàm tự tăng
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Type_User_ID", length = 4)
     private String idtypeuser;
+    @Column(name = "Name_Type", length = 60)
     private String name_type;
+    @Column(name = "Status")
     private int status;
+    @Column(name = "Salary")
     private int Salary;
+
+    @OneToMany(mappedBy = "typeUser")
+    private List<User> users;
+
+    @OneToMany(mappedBy = "typeUser")
+    private List<Account> accounts;
 
 
     public int getSalary() {
