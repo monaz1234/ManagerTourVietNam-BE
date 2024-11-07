@@ -27,7 +27,8 @@ public class AccountService {
         if (optionalAccount.isPresent()){
             Account account = optionalAccount.get();
             account.setUsername(accountDataDetail.getUsername());
-            account.setIdtypeuser(accountDataDetail.getIdtypeuser());
+            account.setTypeUser(accountDataDetail.getTypeUser());
+            account.setUser(accountDataDetail.getUser());
             account.setPassword(accountDataDetail.getPassword());
             account.setStatus(accountDataDetail.getStatus());
             account.setImage(accountDataDetail.getImage());
