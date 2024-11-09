@@ -9,8 +9,7 @@ public class Hotel {
     private String id_hotel;
     private String name_hotel;
     private String description;
-    private String room;
-    private String type_room;
+
     private String image;
     private Boolean status;
 
@@ -38,21 +37,7 @@ public class Hotel {
         this.description = description;
     }
 
-    public String getRoom() {
-        return room;
-    }
 
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getType_room() {
-        return type_room;
-    }
-
-    public void setType_room(String type_room) {
-        this.type_room = type_room;
-    }
 
     public String getImage() {
         return image;

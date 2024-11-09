@@ -30,8 +30,7 @@ public class HotelService {
             Hotel hotel=optionHotel.get();
             hotel.setName_hotel(hotelDetail.getName_hotel());
             hotel.setDescription(hotelDetail.getDescription());
-            hotel.setRoom(hotelDetail.getRoom());
-            hotel.setType_room(hotelDetail.getType_room());
+
             hotel.setImage(hotelDetail.getImage());
             hotel.setStatus(hotelDetail.getStatus());
             return hotelRepository.save(hotel);
