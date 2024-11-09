@@ -6,20 +6,37 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "user")
+@Table(name = "USER")
 public class User {
     @Id
     // hàm tự tăng
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDUser", length = 4)
     private String iduser;
+    @Column(name = "Name", length = 100)
     private String name;
-    private Date birth;
+    @Column(name = "Birth")
+    private java.sql.Date birth;
+    @Column(name = "Email", length = 200)
     private String email;
+    @Column(name = "Phone", length = 14)
     private String phone;
+    @Column(name = "Points")
     private int points;
+    @Column(name = "Salary")
     private int salary;
+    @Column(name = "Reward")
     private int reward;
-    private boolean status;
+    @Column(name = "Status")
+    private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "Type_User", referencedColumnName = "Type_User_ID")
+    private Type_user typeUser;
+
+
+
+
 
 
     public String getIduser() {
@@ -86,19 +103,19 @@ public class User {
         this.reward = reward;
     }
 
-    public boolean isStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
+    public Type_user getTypeUser() {
+        return typeUser;
+    }
 
-
-
-
-
-
-
+    public void setTypeUser(Type_user typeUser) {
+        this.typeUser = typeUser;
+    }
 }
