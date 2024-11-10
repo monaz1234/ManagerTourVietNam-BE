@@ -3,6 +3,10 @@ package com.ManagerTourVietNam.service;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,10 +28,9 @@ public class UserService {
 
 
 
-    // Sửa thông tin người dùng
-    public User updateUser(String id, User userDetails){
+    public User updateUser(String id, User userDetails) {
         Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setName(userDetails.getName());
             user.setBirth(userDetails.getBirth());
@@ -37,10 +40,21 @@ public class UserService {
             user.setReward(userDetails.getReward());
             user.setSalary(userDetails.getSalary());
             user.setStatus(userDetails.getStatus());
+
+            // Cập nhật typeUser từ userDetails
+            if (userDetails.getTypeUser() != null) {
+                user.setTypeUser(userDetails.getTypeUser());
+            } else {
+                // Xử lý trường hợp không có thông tin về typeUser (nếu cần)
+                user.setTypeUser(null); // Hoặc sử dụng mặc định nếu cần
+            }
+
             return userRepository.save(user);
         }
         return null;
     }
+
+
 
     // Xóa người dùng
     public void deleteUser(String id){
@@ -51,6 +65,15 @@ public class UserService {
     // Tìm kiếm người dùng
     public Optional<User> findUserById(String id){
         return userRepository.findById(id);
+    }
+    // Cập nhật phương thức phân trang
+
+
+
+    // Lấy danh sách người dùng phân trang
+    public Page<User> getUsersWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);  // Tạo Pageable với số trang và kích thước trang
+        return userRepository.findAll(pageable);  // Trả về danh sách phân trang
     }
 
 

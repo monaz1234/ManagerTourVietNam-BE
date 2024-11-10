@@ -1,8 +1,12 @@
 package com.ManagerTourVietNam.controller;
 
 import com.ManagerTourVietNam.model.User;
+import com.ManagerTourVietNam.repository.UserRepository;
 import com.ManagerTourVietNam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +18,8 @@ import java.util.Optional;
 public class    UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     // lấy thông tin người dùng
     @GetMapping("/api/users")
@@ -46,6 +52,17 @@ public class    UserController {
     public Optional<User> findUserById(@PathVariable String id){
         return userService.findUserById(id);
     }
+
+    @GetMapping("/api/user/phantrang")
+    public Page<User> getUsers(
+            @RequestParam int page,
+            @RequestParam int pageSize) {
+        // Chuyển page từ người dùng (bắt đầu từ 1) sang hệ thống của Spring Data (bắt đầu từ 0)
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return userRepository.findAll(pageable);
+    }
+
+
 
 
 

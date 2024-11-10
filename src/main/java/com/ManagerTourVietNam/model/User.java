@@ -9,7 +9,6 @@ import java.sql.Date;
 @Table(name = "USER")
 public class User {
     @Id
-    // hàm tự tăng
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDUser", length = 4)
     private String iduser;
@@ -30,9 +29,13 @@ public class User {
     @Column(name = "Status")
     private int status;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Type_User", referencedColumnName = "Type_User_ID")
     private Type_user typeUser;
+
+
+
+
 
 
 
