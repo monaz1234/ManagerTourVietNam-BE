@@ -9,7 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,21 +20,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // danh sách người dùng
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    // thêm người dùng
-    public User addUser(User user){
+
+    public User addUser(User user) {
         return userRepository.save(user);
     }
 
-
-
-    public User updateUser(String id, User userDetails) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+    public User updateUser(String id, User userDetails) throws UserPrincipalNotFoundException {
+        return userRepository.findById(id).map(user -> {
             user.setName(userDetails.getName());
             user.setBirth(userDetails.getBirth());
             user.setEmail(userDetails.getEmail());
@@ -41,40 +39,46 @@ public class UserService {
             user.setSalary(userDetails.getSalary());
             user.setStatus(userDetails.getStatus());
 
-            // Cập nhật typeUser từ userDetails
             if (userDetails.getTypeUser() != null) {
                 user.setTypeUser(userDetails.getTypeUser());
             } else {
-                // Xử lý trường hợp không có thông tin về typeUser (nếu cần)
-                user.setTypeUser(null); // Hoặc sử dụng mặc định nếu cần
+                user.setTypeUser(null);
             }
 
             return userRepository.save(user);
-        }
-        return null;
+        }).orElseThrow(() -> new UserPrincipalNotFoundException("User not found with id " + id));
     }
 
 
 
-    // Xóa người dùng
-    public void deleteUser(String id){
+
+    public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
 
-
-    // Tìm kiếm người dùng
-    public Optional<User> findUserById(String id){
+    public Optional<User> findUserById(String id) {
         return userRepository.findById(id);
     }
-    // Cập nhật phương thức phân trang
 
+    public Map<String, Object> getUsersWithPagination(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Page<User> pageUsers = userRepository.findAll(pageable);
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("users", pageUsers.getContent());
+        response.put("currentPage", pageUsers.getNumber());
+        response.put("totalItems", pageUsers.getTotalElements());
+        response.put("totalPages", pageUsers.getTotalPages());
 
-    // Lấy danh sách người dùng phân trang
-    public Page<User> getUsersWithPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);  // Tạo Pageable với số trang và kích thước trang
-        return userRepository.findAll(pageable);  // Trả về danh sách phân trang
+        return response;
     }
+
+    public List<User> searchUsers(String query) {
+        // Tìm kiếm theo từ khóa (có thể là iduser, name, hoặc email)
+        return userRepository.findByIduserContainingOrNameContainingOrEmailContaining(query, query, query);
+    }
+
+
 
 
 }
