@@ -1,20 +1,27 @@
 package com.ManagerTourVietNam.service.TourService;
 
+import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
 import com.ManagerTourVietNam.model.TourModel.Tour;
+import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
 import com.ManagerTourVietNam.repository.TourRepository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class TourService {
     @Autowired
     private TourRepository tourRepository;
-
+    @Autowired
+    private TourDetailRepository tourDetailRepository;
     // lấy danh sách tour
     public List<Tour> getAllTour()
     {
@@ -46,17 +53,78 @@ public class TourService {
         return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     // xóa tour theo id
-    public ResponseEntity<Tour> deleteTour(String id)
+    public ResponseEntity<Map<String, Object>> deleteTour(String id)
     {
         Optional<Tour> optionalTour = tourRepository.findById(id);
-        if(optionalTour.isPresent())
+        Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(id);
+        if(optionalTour.isPresent() && optionalTourDetail.isPresent())
         {
             Tour tour = optionalTour.get();
-            tour.setIs_deleted(!tour.isIs_deleted());
+            TourDetail tourDetail = optionalTourDetail.get();
+            if(!tour.isIs_deleted() && !tourDetail.isIs_deleted())
+            {
+                //đánh dấu đã xóa mềm
+                tour.setIs_deleted(true);
+                tourDetail.setIs_deleted(true);
+                // lưu
+                Tour updatedTour = tourRepository.save(tour);
+                TourDetail updatedTourDetail = tourDetailRepository.save(tourDetail);
+                // tạo map trả về 2 đối tượng
+                Map<String, Object> response = new HashMap<>();
+                response.put("updatedTour", updatedTour);
+                response.put("updatedTourDetail", updatedTourDetail);
 
-            Tour updatedTour = tourRepository.save(tour);
-            return new ResponseEntity<>(updatedTour,HttpStatus.OK);
+                return new ResponseEntity<>(response,HttpStatus.OK);
+
+            }else {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    // thêm tour
+    public Tour addTour(Tour tour)
+    {
+        return tourRepository.save(tour);
+    }
+
+    // tìm kiếm tour theo tên thành phố
+    public List<Tour> getAllTourByLocation(String location)
+    {
+        return tourRepository.findByLocationContaining(location);
+    }
+
+    // cập nhật giá tour theo id tour
+//    public void updatePrice(String idtour, int newPrice) {
+//        Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(idtour);
+//        if (optionalTourDetail.isPresent()) {
+//            TourDetail tourDetail = optionalTourDetail.get();
+//            tourDetail.setTotal_price(newPrice);
+//            tourDetailRepository.save(tourDetail);
+//        }
+//    }
+    // cập nhật số chỗ theo id tour
+    public void updatePlace(String idtour, int newPlace)
+    {
+        Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(idtour);
+        if(optionalTourDetail.isPresent())
+        {
+            TourDetail tourDetail = optionalTourDetail.get();
+            tourDetail.setPlace(newPlace);
+            tourDetailRepository.save(tourDetail);
+        }
+    }
+    // cập nhật ngày khởi hành theo id tour
+    public void updateDepart(String idtour, LocalDate newDepart)
+    {
+        Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(idtour);
+        if(optionalTourDetail.isPresent())
+        {
+            TourDetail tourDetail = optionalTourDetail.get();
+            tourDetail.setDepart(newDepart);
+            tourDetailRepository.save(tourDetail);
+        }
+    }
+
+
 }
