@@ -1,5 +1,6 @@
 package com.ManagerTourVietNam.model.ServiceModel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Table (name="service")
 public class Service {
     @Id
+    @Column(name="id_service")
     private String id_service;
     private String name_service;
     private String description;
@@ -19,6 +21,8 @@ public class Service {
     private LocalDate time_end;
     private String plant;
     private boolean status;
+    @Column(name="price")
+    private double price;
 
     public String getId_service() {
         return id_service;
@@ -76,9 +80,16 @@ public class Service {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Service(){}
 
-    public Service(String id_service, String name_service, String description, LocalDate time_start, LocalDate time_end, String plant, boolean status) {
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Service(String id_service, String name_service, String description, LocalDate time_start, LocalDate time_end, String plant, boolean status, double price) {
         this.id_service = id_service;
         this.name_service = name_service;
         this.description = description;
@@ -86,7 +97,12 @@ public class Service {
         this.time_end = time_end;
         this.plant = plant;
         this.status = status;
+        this.price = price;
     }
+
+    public Service(){}
+
+
 
     @Override
     public String toString() {
