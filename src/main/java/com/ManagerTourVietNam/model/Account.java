@@ -26,11 +26,11 @@ public class Account {
     @Column(name = "Image", length = 300)
     private String image;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "idTypeUser", referencedColumnName = "Type_User_ID")
     private Type_user typeUser;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "IDUser", referencedColumnName = "IDUser")
     private User user;
 
