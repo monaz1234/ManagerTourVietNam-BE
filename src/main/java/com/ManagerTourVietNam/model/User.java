@@ -29,18 +29,9 @@ public class User {
     @Column(name = "Status")
     private int status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "Type_User", referencedColumnName = "Type_User_ID")
     private Type_user typeUser;
-
-
-
-
-
-
-
-
-
 
     public String getIduser() {
         return iduser;

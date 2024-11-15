@@ -53,13 +53,8 @@ public class    UserController {
 
     // Xóa người dùng
     @DeleteMapping("/api/user/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public void deleteUser(@PathVariable String id){
+        userService.deleteUser(id);
     }
 
     // Tìm kiếm thông tin người dùng theo id
@@ -69,6 +64,11 @@ public class    UserController {
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
+
+//    @DeleteMapping("/api/user/{id}")
+//    public void deleteUser(String id){
+//        userRepository.deleteById(id);
+//    }
 
     // Lấy danh sách người dùng với phân trang
     @GetMapping("/api/user/phantrang")
