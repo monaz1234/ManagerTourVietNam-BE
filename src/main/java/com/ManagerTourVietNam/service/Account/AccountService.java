@@ -2,11 +2,18 @@ package com.ManagerTourVietNam.service.Account;
 
 
 import com.ManagerTourVietNam.model.Account;
+import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -45,4 +52,23 @@ public class AccountService {
     public Optional<Account> findAccountById(String id){
         return accountRepository.findById(id);
     }
+
+    public Map<String, Object> getAccountsWithPagination(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Page<Account> pageAccounts = accountRepository.findAll(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("accounts", pageAccounts.getContent());
+        response.put("currentPage", pageAccounts.getNumber());
+        response.put("totalItems", pageAccounts.getTotalElements());
+        response.put("totalPages", pageAccounts.getTotalPages());
+
+        return response;
+    }
+
+    public List<Account> searchAccounts(String query) {
+        return accountRepository.findByIdaccountContainingIgnoreCaseOrUsernameContainingIgnoreCase(query, query);
+    }
+
+
 }
