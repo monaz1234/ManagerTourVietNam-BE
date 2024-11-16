@@ -1,10 +1,13 @@
 package com.ManagerTourVietNam.controller.TourDetailController;
 
+import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
+import com.ManagerTourVietNam.model.TourModel.Tour;
 import com.ManagerTourVietNam.service.TourDetailService.TourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -12,7 +15,12 @@ import java.text.DecimalFormat;
 public class TourDetailController {
     @Autowired
     private TourDetailService tourDetailService;
-
+    // get all tour
+    @GetMapping("/tour_detail")
+    public List<TourDetail> getAllTourDetail()
+    {
+        return tourDetailService.getAllTourDetailWithTotalPrice();
+    }
     // lấy giá hotel
     @GetMapping("/tour_detail/hotel_price")
     public double getHotelPrice(@RequestParam("id") String idtour) {

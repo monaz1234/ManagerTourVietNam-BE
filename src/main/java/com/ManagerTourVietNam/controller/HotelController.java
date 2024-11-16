@@ -1,6 +1,6 @@
 package com.ManagerTourVietNam.controller;
 
-import com.ManagerTourVietNam.model.Hotel;
+import com.ManagerTourVietNam.model.HotelModel.Hotel;
 import com.ManagerTourVietNam.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 

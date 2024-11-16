@@ -1,7 +1,7 @@
 package com.ManagerTourVietNam.service;
 
-import com.ManagerTourVietNam.model.Hotel;
-import com.ManagerTourVietNam.repository.HotelRepository;
+import com.ManagerTourVietNam.model.HotelModel.Hotel;
+import com.ManagerTourVietNam.repository.HotelRepository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

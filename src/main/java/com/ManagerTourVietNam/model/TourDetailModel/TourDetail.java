@@ -1,10 +1,10 @@
 package com.ManagerTourVietNam.model.TourDetailModel;
 import com.ManagerTourVietNam.model.HotelModel.Hotel;
+import com.ManagerTourVietNam.model.VehiclesModel.Vehicles;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import com.ManagerTourVietNam.model.ServiceModel.Service;
-import com.ManagerTourVietNam.model.VehiclesModel.Vehicles;
 import com.ManagerTourVietNam.model.TourModel.Tour;
 @Entity
 @Table(name = "tour_detail")

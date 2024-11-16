@@ -1,8 +1,8 @@
 package com.ManagerTourVietNam.service;
 
 
-import com.ManagerTourVietNam.model.Vehicles;
-import com.ManagerTourVietNam.repository.VehiclesRepository;
+import com.ManagerTourVietNam.model.VehiclesModel.Vehicles;
+import com.ManagerTourVietNam.repository.VehiclesRepository.VehiclesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
