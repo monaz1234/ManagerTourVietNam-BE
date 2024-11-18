@@ -2,10 +2,8 @@ package com.ManagerTourVietNam.service.TourDetailService;
 
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.repository.HotelRepository.HotelRepository;
-import com.ManagerTourVietNam.repository.ServiceRepository.ServiceRepository;
 import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
-import com.ManagerTourVietNam.repository.VehiclesRepository.VehiclesRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.ManagerTourVietNam.repository.VehiclesRepository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

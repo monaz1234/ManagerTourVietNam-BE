@@ -1,8 +1,8 @@
 package com.ManagerTourVietNam.service;
 
 
-import com.ManagerTourVietNam.model.Vehicles;
-import com.ManagerTourVietNam.repository.VehiclesRepository;
+import com.ManagerTourVietNam.model.VehiclesModel.Vehicles;
+import com.ManagerTourVietNam.repository.VehiclesRepository.VehiclesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class VehiclesService {
     }
 
     //sua thong tin phuong tien
-    public Vehicles updateVehicles(String id,Vehicles vehiclesDetails){
+    public Vehicles updateVehicles(String id, Vehicles vehiclesDetails){
         Optional<Vehicles> optionalVehicles = vehiclesRepository.findById(id);
         if(optionalVehicles.isPresent()){
             Vehicles vehicles =optionalVehicles.get();
@@ -34,7 +34,7 @@ public class VehiclesService {
             vehicles.setDriver(vehiclesDetails.getDriver());
             vehicles.setImage(vehiclesDetails.getImage());
             vehicles.setDescription(vehiclesDetails.getDescription());
-            vehicles.setStatus(vehiclesDetails.getStatus());
+            vehicles.setStatus(vehiclesDetails.isStatus());
             return vehiclesRepository.save(vehicles);
         }
         return null;

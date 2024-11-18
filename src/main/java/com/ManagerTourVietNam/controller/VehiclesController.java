@@ -1,6 +1,6 @@
 package com.ManagerTourVietNam.controller;
 
-import com.ManagerTourVietNam.model.Vehicles;
+import com.ManagerTourVietNam.model.VehiclesModel.Vehicles;
 import com.ManagerTourVietNam.service.VehiclesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -8,7 +8,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -39,7 +38,7 @@ public class VehiclesController {
 
     //sua thong tin phuong tien
     @PutMapping("/api/vehicles/{id}")
-    public Vehicles updateVehicles(@PathVariable String id,@RequestBody Vehicles vehiclesDetail){
+    public Vehicles updateVehicles(@PathVariable String id, @RequestBody Vehicles vehiclesDetail){
         return vehiclesService.updateVehicles(id,vehiclesDetail);
     }
 
