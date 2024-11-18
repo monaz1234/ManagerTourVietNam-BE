@@ -38,7 +38,7 @@ public class VehiclesController {
 
     //sua thong tin phuong tien
     @PutMapping("/api/vehicles/{id}")
-    public Vehicles updateVehicles(@PathVariable String id,@RequestBody Vehicles vehiclesDetail){
+    public Vehicles updateVehicles(@PathVariable String id, @RequestBody Vehicles vehiclesDetail){
         return vehiclesService.updateVehicles(id,vehiclesDetail);
     }
 
