@@ -69,7 +69,7 @@ public class BookService {
 
     public List<Book> searchBooks(String query) {
         // Tìm kiếm theo từ khóa (có thể là iduser, name, hoặc email)
-        return bookRepository.findByIdbookContaining(query);
+        return bookRepository.findByIdbookContainingOrTour_TournameContainingOrAccount_UsernameContaining(query, query, query);
     }
 
 

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,30 @@ public class AccountController {
     public ResponseEntity<List<Account>> searchAccounts(@RequestParam String query) {
         List<Account> accounts = accountService.searchAccounts(query);
         return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
+
+//    @PostMapping("/api/account/login")
+//    public ResponseEntity<?> login(@RequestBody Account account) {
+//        Optional<Account> foundAccount = accountService.findByUsernameAndPassword(account.getUsername(), account.getPassword());
+//        if (foundAccount.isPresent()) {
+//            return ResponseEntity.ok(foundAccount.get());
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Thông tin đăng nhập không chính xác.");
+//        }
+//    }
+
+    @PostMapping("/api/account/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginPayload) {
+        String username = loginPayload.get("username");
+        String password = loginPayload.get("password");
+
+        Account account = accountService.validateLogin(username, password);
+        if (account != null) {
+            return ResponseEntity.ok(account);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Thông tin đăng nhập không chính xác.");
+        }
     }
 
 }
