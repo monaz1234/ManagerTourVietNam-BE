@@ -70,5 +70,12 @@ public class AccountService {
         return accountRepository.findByIdaccountContainingIgnoreCaseOrUsernameContainingIgnoreCase(query, query);
     }
 
+//    public Optional<Account> findByUsernameAndPassword(String username, String password) {
+//        return accountRepository.findByUsernameAndPassword(username, password);
+//    }
+
+    public Account validateLogin(String username, String password) {
+        return accountRepository.findByUsernameAndPassword(username, password);
+    }
 
 }
