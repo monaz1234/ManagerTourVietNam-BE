@@ -13,13 +13,19 @@ import java.util.Date;
 @Table (name="service")
 public class Service {
     @Id
-    @Column(name="id_service")
+    @Column(name="id_service", length = 4)
     private String id_service;
+    @Column(name = "name_service")
     private String name_service;
+    @Column(name = "description")
     private String description;
+    @Column(name = "time_start")
     private LocalDate time_start;
+    @Column(name = "time_end")
     private LocalDate time_end;
+    @Column(name = "plant")
     private String plant;
+    @Column(name = "ststus")
     private boolean status;
     @Column(name="price")
     private double price;

@@ -10,7 +10,8 @@ import java.sql.Date;
 @Table(name = "BOOKDETAIL")
 public class BookDetail {
     @Id
-    @Column(name = "IDBookDetail", length = 4)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDBookDetail")
     private String idbookdetail;
 
     @ManyToOne

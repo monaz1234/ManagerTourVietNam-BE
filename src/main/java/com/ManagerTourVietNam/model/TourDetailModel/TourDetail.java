@@ -11,17 +11,25 @@ import com.ManagerTourVietNam.model.TourModel.Tour;
 @IdClass(TourDetailId.class)
 public class TourDetail {
     @Id
+    @Column(name = "idtour",  length = 4)
     private String idtour;
     @Id
+    @Column(name = "id_vehicles", length = 4)
     private String id_vehicles;
     @Id
+    @Column(name = "id_hotel", length = 4)
     private String id_hotel;
     @Id
+    @Column(name = "id_service", length = 4)
     private String id_service;
 
-    private LocalDate depart;       // Ngày khởi hành
+    @Column(name = "depart")
+    private LocalDate depart;
+    @Column(name = "total_price")// Ngày khởi hành
     private double total_price;
-    private int place;              // số chỗ
+    @Column(name = "place")
+    private int place;
+    @Column(name = "is_deleted")// số chỗ
     private boolean is_deleted;
 
     public String getIdtour() {

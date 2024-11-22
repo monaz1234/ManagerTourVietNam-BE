@@ -1,5 +1,6 @@
 package com.ManagerTourVietNam.model.PaymentModel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
@@ -7,15 +8,25 @@ import java.time.LocalDate;
 @Entity
 public class PaymentMethod {
     @Id
+    @Column(name = "id_method", length = 4)
     private String id_method;
+    @Column(name = "payment_code")
     private String payment_code;
+    @Column(name = "payment_name")
     private String payment_name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "free_percentage")
     private double fee_percentage;
+    @Column(name = "supported_currencies")
     private String supported_currencies;
+    @Column(name = "transaction_limit")
     private Long transaction_limit;
+    @Column(name = "is_active")
     private boolean is_active;
+    @Column(name = "created_at")
     private LocalDate created_at;
+    @Column(name = "updated_at")
     private LocalDate updated_at;
 
     public String getId_method() {

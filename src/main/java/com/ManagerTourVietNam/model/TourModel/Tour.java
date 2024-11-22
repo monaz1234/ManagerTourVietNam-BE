@@ -10,14 +10,21 @@ import jakarta.persistence.Table;
 @Table (name= "tour" )
 public class Tour {
     @Id
+    @Column(name = "idtour", length = 4)
     private String idtour;           // ID của tour
-    private String idtour_type;      // ID loại tour
+    @Column(name = "idtour_type")
+    private String idtour_type;
+    @Column(name = "tourname")// ID loại tour
     private String tourname;         // Tên tour
     @Column(name = "location")
-    private String location;         // Địa điểm tour
-    private boolean status;          // Trạng thái tour
-    private String description;      // Mô tả tour
-    private String image;            // Đường dẫn đến hình ảnh của tour
+    private String location;
+    @Column(name = "status")// Địa điểm tour
+    private boolean status;
+    @Column(name = "description")// Trạng thái tour
+    private String description;
+    @Column(name = "image")// Mô tả tour
+    private String image;
+    @Column(name = "is_deleted")// Đường dẫn đến hình ảnh của tour
     private boolean is_deleted;
 
     public Tour()

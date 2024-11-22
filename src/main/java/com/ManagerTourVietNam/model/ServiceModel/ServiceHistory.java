@@ -10,16 +10,27 @@ import java.time.LocalDateTime;
 public class ServiceHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_history")
     private Long id_history;
+    @Column(name = "id_service", length = 4)
     private String id_service;
+    @Column(name = "old_name_service")
     private String old_name_service;
+    @Column(name = "new_name_service")
     private String new_name_service;
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
+    @Column(name = "old_status")
     private boolean old_status;
+    @Column(name = "new_status")
     private boolean new_status;
+    @Column(name = "old_description")
     private String old_description;
+    @Column(name = "new_description")
     private String new_description;
+    @Column(name = "changed_by")
     private String changed_by;
+    @Column(name = "notes")
     private String notes;
 
     public ServiceHistory(Long id_history, String id_service, String old_name_service, String new_name_service, LocalDateTime timestamp, boolean old_status, boolean new_status, String old_description, String new_description, String changed_by, String notes) {
