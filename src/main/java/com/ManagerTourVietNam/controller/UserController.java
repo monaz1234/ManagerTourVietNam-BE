@@ -47,7 +47,11 @@ public class    UserController {
         return userService.findUserById(id);
     }
 
-
+    @GetMapping("api/user/check-user-email")
+    public Boolean checkIfUserExists(@RequestParam String email) {
+        boolean exists = userService.checkIfUserExists(email);
+        return exists ? true : false;
+    }
 
 
 }
