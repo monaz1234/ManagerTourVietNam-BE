@@ -112,4 +112,36 @@ public class User {
     public void setTypeUser(Type_user typeUser) {
         this.typeUser = typeUser;
     }
+
+
+    public User(){}
+
+    public User(String iduser, String name, Date birth, String email, String phone, int points, int salary, int reward, int status, Type_user typeUser) {
+        this.iduser = iduser;
+        this.name = name;
+        this.birth = birth;
+        this.email = email;
+        this.phone = phone;
+        this.points = points;
+        this.salary = salary;
+        this.reward = reward;
+        this.status = status;
+        this.typeUser = typeUser;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "iduser='" + iduser + '\'' +
+                ", name='" + name + '\'' +
+                ", birth=" + birth +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", points=" + points +
+                ", salary=" + salary +
+                ", reward=" + reward +
+                ", status=" + status +
+                ", typeUser=" + typeUser +
+                '}';
+    }
 }

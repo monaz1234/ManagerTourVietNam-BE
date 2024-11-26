@@ -93,4 +93,29 @@ public class Account {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Account(){}
+
+    public Account(String idaccount, String username, String password, int status, String image, Type_user typeUser, User user) {
+        this.idaccount = idaccount;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.image = image;
+        this.typeUser = typeUser;
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "idaccount='" + idaccount + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", image='" + image + '\'' +
+                ", typeUser=" + typeUser +
+                ", user=" + user +
+                '}';
+    }
 }

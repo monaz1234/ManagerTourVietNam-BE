@@ -10,8 +10,8 @@ import java.sql.Date;
 @Table(name = "BOOKDETAIL")
 public class BookDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDBookDetail")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IDBookDetail", length = 4)
     private String idbookdetail;
 
     @ManyToOne
@@ -77,5 +77,27 @@ public class BookDetail {
 
     public void setParticipant(String participant) {
         this.participant = participant;
+    }
+
+    public BookDetail(){}
+    public BookDetail(String idbookdetail, Book idbook, Promotion promotion_code, Date time_book, int quantity, String participant) {
+        this.idbookdetail = idbookdetail;
+        this.idbook = idbook;
+        this.promotion_code = promotion_code;
+        this.time_book = time_book;
+        this.quantity = quantity;
+        this.participant = participant;
+    }
+
+    @Override
+    public String toString() {
+        return "BookDetail{" +
+                "idbookdetail='" + idbookdetail + '\'' +
+                ", idbook=" + idbook +
+                ", promotion_code=" + promotion_code +
+                ", time_book=" + time_book +
+                ", quantity=" + quantity +
+                ", participant='" + participant + '\'' +
+                '}';
     }
 }
