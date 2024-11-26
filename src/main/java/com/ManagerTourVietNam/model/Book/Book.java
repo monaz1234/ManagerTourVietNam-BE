@@ -52,4 +52,22 @@ public class Book {
     public void setTour(Tour tour) {
         this.tour = tour;
     }
+
+    public Book(){}
+    public Book(String idbook, int status, Account account, Tour tour) {
+        this.idbook = idbook;
+        this.status = status;
+        this.account = account;
+        this.tour = tour;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "idbook='" + idbook + '\'' +
+                ", status=" + status +
+                ", account=" + account +
+                ", tour=" + tour +
+                '}';
+    }
 }

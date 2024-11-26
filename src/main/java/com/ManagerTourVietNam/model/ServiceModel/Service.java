@@ -25,7 +25,7 @@ public class Service {
     private LocalDate time_end;
     @Column(name = "plant")
     private String plant;
-    @Column(name = "ststus")
+    @Column(name = "status")
     private boolean status;
     @Column(name="price")
     private double price;
