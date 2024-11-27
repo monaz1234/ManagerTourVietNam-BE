@@ -28,6 +28,8 @@ public class AuthController {
     private UserRepository userRepository;
     @Autowired
     private AccountRepository accountRepository;
+
+
     @PostMapping("api/auth/google")
     public ResponseEntity<?> verifyGoogleToken(@RequestBody Map<String, String> request) {
         String token = request.get("token");
@@ -101,7 +103,7 @@ public class AuthController {
         newAccount.setStatus(1);
         // Tạo Type_user mặc định có id "T001"
         Type_user defaultTypeUser = new Type_user();
-        defaultTypeUser.setIdtypeuser("T001"); // Gán id mặc định là "T001"
+        defaultTypeUser.setIdtypeuser("T003"); // Gán id mặc định là "T003"
         newAccount.setTypeUser(defaultTypeUser); // Gán vào User
         newAccount.setUser(user);
 
