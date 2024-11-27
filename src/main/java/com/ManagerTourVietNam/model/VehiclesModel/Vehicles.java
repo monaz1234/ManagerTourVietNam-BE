@@ -8,13 +8,19 @@ import jakarta.persistence.Id;
 @Table(name = "vehicles")
 public class Vehicles {
     @Id
-    @Column(name = "id_vehicles")
+    @Column(name = "id_vehicles", length = 4)
     private String id_vehicles;
+    @Column(name = "name_vehicles")
     private String name_vehicles;
+    @Column(name = "place_vehicles")
     private int place_vehicles;
+    @Column(name = "driver")
     private String driver; // tương ứng với cột 'driver'
+    @Column(name = "image")
     private String image; // tương ứng với cột 'image'
+    @Column(name = "description")
     private String description; // tương ứng với cột 'description'
+    @Column(name = "status")
     private boolean status; // tương ứng với cột 'status' (một giá trị boolean)
     @Column(name = "price")
     private double price;

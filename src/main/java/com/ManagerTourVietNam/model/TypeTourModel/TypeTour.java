@@ -1,5 +1,6 @@
 package com.ManagerTourVietNam.model.TypeTourModel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -8,7 +9,9 @@ import jakarta.persistence.Table;
 @Table (name="type_tour")
 public class TypeTour {
     @Id
+    @Column(name = "idtour_type", length = 4)
     private String idtour_type;
+    @Column(name = "name_type")
     private String name_type;
 
     public String getIdtour_type() {

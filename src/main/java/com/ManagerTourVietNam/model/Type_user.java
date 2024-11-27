@@ -70,4 +70,9 @@ public class Type_user {
     public void setName_type(String name_type) {
         this.name_type = name_type;
     }
+
+
+
+
+
 }

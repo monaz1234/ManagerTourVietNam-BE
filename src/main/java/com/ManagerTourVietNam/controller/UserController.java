@@ -91,6 +91,10 @@ public class    UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-
+    @GetMapping("api/user/check-user-email")
+    public Boolean checkIfUserExists(@RequestParam String email) {
+        boolean exists = userService.checkIfUserExists(email);
+        return exists ? true : false;
+    }
 
 }
