@@ -49,9 +49,6 @@ public class UserService {
         }).orElseThrow(() -> new UserPrincipalNotFoundException("User not found with id " + id));
     }
 
-
-
-
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
@@ -78,7 +75,8 @@ public class UserService {
         return userRepository.findByIduserContainingOrNameContainingOrEmailContaining(query, query, query);
     }
 
-
-
+    public boolean checkIfUserExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
 }
