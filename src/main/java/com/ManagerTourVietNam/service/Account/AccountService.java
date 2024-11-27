@@ -78,4 +78,8 @@ public class AccountService {
         return accountRepository.findByUsernameAndPassword(username, password);
     }
 
+    public Optional<String> findIdUserByUsername(String username) {
+        return accountRepository.findByUsername(username).map(Account::getUser).map(User::getIduser);
+    }
+
 }

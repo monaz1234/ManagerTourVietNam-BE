@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -97,5 +98,15 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Thông tin đăng nhập không chính xác.");
         }
     }
+    @GetMapping("/api/accounts/iduser")
+    public ResponseEntity<?> getIdUserByUsername(@RequestParam String username) {
+        Optional<String> idUser = accountService.findIdUserByUsername(username);
+        if (idUser.isPresent()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("iduser", idUser.get());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }    }
 
 }

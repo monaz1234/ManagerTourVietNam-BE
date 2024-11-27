@@ -11,12 +11,13 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     Page<Account> findByUsernameContaining(String username, Pageable pageable);
-
+    Optional<Account> findByUser_Iduser(String iduser);
     List<Account> findByIdaccountContainingIgnoreCaseOrUsernameContainingIgnoreCase(String idaccount, String username);
 
     // Tìm kiếm tài khoản theo username và password
 //    Optional<Account> findByUsernameAndPassword(String username, String password);
 
     Account findByUsernameAndPassword(String username, String password);
+    Optional<Account> findByUsername(String username);
 
 }
