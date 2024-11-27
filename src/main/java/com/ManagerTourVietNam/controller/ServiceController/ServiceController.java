@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,9 +43,21 @@ public class ServiceController {
 
     // update service
     @PutMapping("/api/service/{id}")
-    public ResponseEntity<Service> updateService(@PathVariable String id, @RequestBody Service serviceDetail){
-        return serviceService.updateService(id,serviceDetail);
+    public ResponseEntity<Service> updateService(@PathVariable String id, @RequestBody Service serviceDetail) {
+        try {
+            Service updatedService = serviceService.updateService(id, serviceDetail);
+            return ResponseEntity.ok(updatedService); // Trả về đối tượng đã cập nhật
+        } catch (UserPrincipalNotFoundException e) {
+            // Log lỗi chi tiết để dễ dàng kiểm tra
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
+
+
+//    @PutMapping("/api/service/{id}")
+//    public ResponseEntity<Service> updateService(@PathVariable String id, @RequestBody Service serviceDetail){
+//        return serviceService.updateService(id,serviceDetail);
+//    }
 
     // delete service by id
     @DeleteMapping("/api/service/{id}")

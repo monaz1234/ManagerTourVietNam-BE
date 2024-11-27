@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,25 +31,41 @@ public class ServiceService {
             return serviceRepository.save(service);
         }
         // by ID
-        public ResponseEntity<com.ManagerTourVietNam.model.ServiceModel.Service> updateService(String id, com.ManagerTourVietNam.model.ServiceModel.Service serviceDetail){
-            Optional<com.ManagerTourVietNam.model.ServiceModel.Service> optionalService = serviceRepository.findById(id);
+//        public ResponseEntity<com.ManagerTourVietNam.model.ServiceModel.Service> updateService(String id, com.ManagerTourVietNam.model.ServiceModel.Service serviceDetail){
+//            Optional<com.ManagerTourVietNam.model.ServiceModel.Service> optionalService = serviceRepository.findById(id);
+//
+//            if(optionalService.isPresent()){
+//                com.ManagerTourVietNam.model.ServiceModel.Service service = optionalService.get();
+//                service.setId_service(serviceDetail.getId_service());
+//                service.setName_service(serviceDetail.getName_service());
+//                service.setDescription(serviceDetail.getDescription());
+//                service.setTime_start(serviceDetail.getTime_start());
+//                service.setTime_end(serviceDetail.getTime_end());
+//                service.setPlant(serviceDetail.getPlant());
+//                service.setStatus(serviceDetail.isStatus());
+//
+//                com.ManagerTourVietNam.model.ServiceModel.Service updatedService = serviceRepository.save(service);
+//                return new ResponseEntity<>(updatedService, HttpStatus.OK);
+//            }else {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//        }
 
-            if(optionalService.isPresent()){
-                com.ManagerTourVietNam.model.ServiceModel.Service service = optionalService.get();
-                service.setId_service(serviceDetail.getId_service());
-                service.setName_service(serviceDetail.getName_service());
-                service.setDescription(serviceDetail.getDescription());
-                service.setTime_start(serviceDetail.getTime_start());
-                service.setTime_end(serviceDetail.getTime_end());
-                service.setPlant(serviceDetail.getPlant());
-                service.setStatus(serviceDetail.isStatus());
+    public com.ManagerTourVietNam.model.ServiceModel.Service updateService(String id, com.ManagerTourVietNam.model.ServiceModel.Service serviceDetails) throws UserPrincipalNotFoundException {
+        return serviceRepository.findById(id).map(service -> {
+            service.setName_service(serviceDetails.getName_service());
+            service.setTime_start(serviceDetails.getTime_start());
+            service.setTime_end(serviceDetails.getTime_end());
+            service.setStatus(serviceDetails.isStatus());
+            service.setPrice(serviceDetails.getPrice());
+            service.setPlant(serviceDetails.getPlant());
+            service.setDescription(serviceDetails.getDescription());
+            return serviceRepository.save(service); // Lưu thay đổi vào cơ sở dữ liệu
+        }).orElseThrow(() -> new UserPrincipalNotFoundException("User not found with id " + id));
+    }
 
-                com.ManagerTourVietNam.model.ServiceModel.Service updatedService = serviceRepository.save(service);
-                return new ResponseEntity<>(updatedService, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        }
+
+
         // xóa theo id
         public void deleteService(String id){
              serviceRepository.deleteById(id);

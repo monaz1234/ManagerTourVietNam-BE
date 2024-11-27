@@ -4,10 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jdk.jfr.Enabled;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table (name="service")
@@ -28,7 +26,7 @@ public class Service {
     @Column(name = "status")
     private boolean status;
     @Column(name="price")
-    private double price;
+    private int price;
 
     public String getId_service() {
         return id_service;
@@ -87,7 +85,7 @@ public class Service {
         this.description = description;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -95,7 +93,7 @@ public class Service {
         this.price = price;
     }
 
-    public Service(String id_service, String name_service, String description, LocalDate time_start, LocalDate time_end, String plant, boolean status, double price) {
+    public Service(String id_service, String name_service, String description, LocalDate time_start, LocalDate time_end, String plant, boolean status, int price) {
         this.id_service = id_service;
         this.name_service = name_service;
         this.description = description;
