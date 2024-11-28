@@ -18,11 +18,11 @@ public class invoice_detail {
     private invoice idinvoice;
 
     @ManyToOne
-    @JoinColumn(name = "ID_Book", referencedColumnName = "IDBook")
+    @JoinColumn(name = "IDBook", referencedColumnName = "IDBook")
     private Book idbook;
 
     @ManyToOne
-    @JoinColumn(name = "ID_Tour", referencedColumnName = "idtour")
+    @JoinColumn(name = "idtour", referencedColumnName = "idtour")
     private Tour idtour;
 
     @Column(name = "Quantity")
