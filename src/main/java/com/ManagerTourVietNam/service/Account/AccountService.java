@@ -1,14 +1,19 @@
 package com.ManagerTourVietNam.service.Account;
 
-
 import com.ManagerTourVietNam.model.Account;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -21,17 +26,17 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public List<Account> getAllAccounts(){
+    public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
 
-    public Account addAccount(Account account){
+    public Account addAccount(Account account) {
         return accountRepository.save(account);
     }
 
-    public Account updateAccount(String id, Account accountDataDetail){
+    public Account updateAccount(String id, Account accountDataDetail) {
         Optional<Account> optionalAccount = accountRepository.findById(id);
-        if (optionalAccount.isPresent()){
+        if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             account.setUsername(accountDataDetail.getUsername());
             account.setTypeUser(accountDataDetail.getTypeUser());
@@ -45,11 +50,11 @@ public class AccountService {
         return null;
     }
 
-    public void deleteAccount(String id){
+    public void deleteAccount(String id) {
         accountRepository.deleteById(id);
     }
 
-    public Optional<Account> findAccountById(String id){
+    public Optional<Account> findAccountById(String id) {
         return accountRepository.findById(id);
     }
 
@@ -70,16 +75,49 @@ public class AccountService {
         return accountRepository.findByIdaccountContainingIgnoreCaseOrUsernameContainingIgnoreCase(query, query);
     }
 
-//    public Optional<Account> findByUsernameAndPassword(String username, String password) {
-//        return accountRepository.findByUsernameAndPassword(username, password);
-//    }
+    // public Optional<Account> findByUsernameAndPassword(String username, String
+    // password) {
+    // return accountRepository.findByUsernameAndPassword(username, password);
+    // }
 
     public Account validateLogin(String username, String password) {
         return accountRepository.findByUsernameAndPassword(username, password);
     }
 
+
+
+
+
+        public String getIdUserFromAccount(Account account) {
+            if (account.getUser() != null) {
+                return account.getUser().getIduser();
+            }
+            return null; // Trả về null nếu không có user liên kết
+        }
+
+    public String getIdUserByAccountId(String accountId) {
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if (accountOptional.isPresent()) {
+            return getIdUserFromAccount(accountOptional.get());
+        }
+        return null; // Không tìm thấy account
+    }
+
+
+    public String getIdUserByAccountIdNew(String iduser) {
+        // Tìm Account theo iduser
+        Optional<Account> accountOptional = accountRepository.findByUserIduser(iduser);
+        if (accountOptional.isPresent()) {
+            return getIdUserFromAccount(accountOptional.get());
+        }
+        return null; // Không tìm thấy account
+    }
+
+
+
     public Optional<String> findIdUserByUsername(String username) {
         return accountRepository.findByUsername(username).map(Account::getUser).map(User::getIduser);
     }
+
 
 }

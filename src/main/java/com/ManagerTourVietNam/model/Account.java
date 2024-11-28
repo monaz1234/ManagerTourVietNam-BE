@@ -3,13 +3,15 @@ package com.ManagerTourVietNam.model;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "ACCOUNT" )
+@Table(name = "ACCOUNT")
 public class Account {
     @Id
     // hàm tự tăng
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDAccount", length = 4)
     private String idaccount;
     @Column(name = "Username", length = 100)
@@ -17,11 +19,11 @@ public class Account {
     @Column(name = "Password", length = 100)
     private String password;
 
-//    private String idtypeuser;
+    // private String idtypeuser;
     @Column(name = "Status")
     private int status;
 
-//    private String iduser;
+    // private String iduser;
 
     @Column(name = "Image", length = 300)
     private String image;
@@ -33,9 +35,6 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "IDUser", referencedColumnName = "IDUser")
     private User user;
-
-
-
 
     public String getIdaccount() {
         return idaccount;
@@ -60,7 +59,6 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public String getImage() {
         return image;
@@ -94,9 +92,11 @@ public class Account {
         this.user = user;
     }
 
-    public Account(){}
+    public Account() {
+    }
 
-    public Account(String idaccount, String username, String password, int status, String image, Type_user typeUser, User user) {
+    public Account(String idaccount, String username, String password, int status, String image, Type_user typeUser,
+            User user) {
         this.idaccount = idaccount;
         this.username = username;
         this.password = password;
@@ -118,4 +118,5 @@ public class Account {
                 ", user=" + user +
                 '}';
     }
+
 }
