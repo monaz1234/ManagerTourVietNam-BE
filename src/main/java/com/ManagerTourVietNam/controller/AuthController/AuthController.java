@@ -5,6 +5,7 @@ import com.ManagerTourVietNam.model.Type_user;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.AccountRepository;
 import com.ManagerTourVietNam.repository.UserRepository;
+import com.ManagerTourVietNam.service.Account.AccountService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -22,13 +23,15 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
+
+    @Autowired
+    private AccountService accountService;
     @Value("${google.client-id}")
     private String clientId;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private AccountRepository accountRepository;
-
 
     @PostMapping("api/auth/google")
     public ResponseEntity<?> verifyGoogleToken(@RequestBody Map<String, String> request) {
