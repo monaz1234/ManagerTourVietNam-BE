@@ -4,13 +4,16 @@ package com.ManagerTourVietNam.service.Account;
 import com.ManagerTourVietNam.model.Account;
 import com.ManagerTourVietNam.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AccountService {
+public class AccountService  {
     @Autowired
     private AccountRepository accountRepository;
 
@@ -45,4 +48,7 @@ public class AccountService {
     public Optional<Account> findAccountById(String id){
         return accountRepository.findById(id);
     }
+
+
+
 }

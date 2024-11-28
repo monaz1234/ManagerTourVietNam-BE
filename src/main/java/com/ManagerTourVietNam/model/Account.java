@@ -3,6 +3,8 @@ package com.ManagerTourVietNam.model;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ACCOUNT" )
@@ -93,4 +95,6 @@ public class Account {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }
