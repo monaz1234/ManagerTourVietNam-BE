@@ -33,9 +33,9 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-
     private AccountRepository accountRepository;
 
+    @Autowired
     private ResourceLoader resourceLoader;
     String dirIUploadImageAccount = System.getProperty("user.dir") + "/public/image/account/";
 
@@ -111,9 +111,9 @@ public class AccountController {
         }
     }
 
-    // lay hinh anh
+    //lay hinh anh
     @GetMapping("/api/account/images/{imageName}")
-    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+    public ResponseEntity<Resource> getImage(@PathVariable String imageName){
         Resource resource = resourceLoader.getResource("file:" + dirIUploadImageAccount + imageName);
         if (!resource.exists()) {
             return ResponseEntity.notFound().build(); // Trả về 404 nếu hình ảnh không tồn tại
