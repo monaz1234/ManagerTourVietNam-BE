@@ -84,4 +84,36 @@ public class AccountService {
         return accountRepository.findByUsernameAndPassword(username, password);
     }
 
+
+
+
+        public String getIdUserFromAccount(Account account) {
+            if (account.getUser() != null) {
+                return account.getUser().getIduser();
+            }
+            return null; // Trả về null nếu không có user liên kết
+        }
+
+    public String getIdUserByAccountId(String accountId) {
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if (accountOptional.isPresent()) {
+            return getIdUserFromAccount(accountOptional.get());
+        }
+        return null; // Không tìm thấy account
+    }
+
+
+    public String getIdUserByAccountIdNew(String iduser) {
+        // Tìm Account theo iduser
+        Optional<Account> accountOptional = accountRepository.findByUserIduser(iduser);
+        if (accountOptional.isPresent()) {
+            return getIdUserFromAccount(accountOptional.get());
+        }
+        return null; // Không tìm thấy account
+    }
+
+
+
+
+
 }

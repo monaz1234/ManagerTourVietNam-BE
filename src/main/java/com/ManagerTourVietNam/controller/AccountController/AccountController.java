@@ -21,10 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -173,5 +170,42 @@ public class AccountController {
                     .body(Collections.singletonMap("message", "Đã xảy ra lỗi khi xóa hình ảnh."));
         }
     }
+
+
+
+    @GetMapping("/api/account/{iduser}/idaccount")
+    public ResponseEntity<String> getIdAccountByIduserNew(@PathVariable String iduser) {
+        // Tìm account dựa trên iduser
+        Optional<Account> accountOptional = accountRepository.findByUserIduser(iduser);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            return ResponseEntity.ok(account.getIdaccount()); // Trả về idaccount
+        }
+        return ResponseEntity.notFound().build(); // Nếu không tìm thấy account
+    }
+
+    private String getIdUserFromAccount(Account account) {
+        if (account.getUser() != null) {
+            return account.getUser().getIduser();
+        }
+        return null;
+    }
+
+    @GetMapping("/api/account/{accountId}/iduser")
+    public ResponseEntity<Map<String, String>> getIdUserByAccountId(@PathVariable String accountId) {
+        String idUser = accountService.getIdUserByAccountId(accountId);
+        if (idUser != null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("iduser", idUser); // Trả về iduser dưới dạng JSON
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
+
+
+
 
 }
