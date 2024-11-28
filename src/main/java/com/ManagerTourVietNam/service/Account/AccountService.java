@@ -87,6 +87,7 @@ public class AccountService {
 
 
 
+
         public String getIdUserFromAccount(Account account) {
             if (account.getUser() != null) {
                 return account.getUser().getIduser();
@@ -114,6 +115,9 @@ public class AccountService {
 
 
 
+    public Optional<String> findIdUserByUsername(String username) {
+        return accountRepository.findByUsername(username).map(Account::getUser).map(User::getIduser);
+    }
 
 
 }

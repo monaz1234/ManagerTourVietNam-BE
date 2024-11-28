@@ -12,10 +12,11 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     Page<Account> findByUsernameContaining(String username, Pageable pageable);
-
+    Optional<Account> findByUser_Iduser(String iduser);
     List<Account> findByIdaccountContainingIgnoreCaseOrUsernameContainingIgnoreCase(String idaccount, String username);
 
     Account findByUsernameAndPassword(String username, String password);
+    Optional<Account> findByUsername(String username);
 
     Optional<Account> findByUserIduser(String iduser);
 
