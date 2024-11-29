@@ -25,6 +25,7 @@ public class TourDetailService {
             double hotelPrice = getHotelPrice(tourDetail.getIdtour());
             double total_price = (servicePrice + vehiclesPrice + hotelPrice) * 1.16; // Thêm 16%
             tourDetail.setTotal_price(total_price);
+            tourDetailRepository.save(tourDetail); // Lưu giá trị cập nhật vào DB
         }
         return tourDetails;
     }
