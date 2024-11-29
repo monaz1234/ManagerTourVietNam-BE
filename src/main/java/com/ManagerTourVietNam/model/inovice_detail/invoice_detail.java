@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Table(name = "INVOICE_DETAIL")
 public class invoice_detail {
     @Id
-    @Column(name = "Id_InvoceDetail")
+    @Column(name = "Id_InvoceDetail", length = 4)
     private String idvoicedetail;
 
     @ManyToOne
