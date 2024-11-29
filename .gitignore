@@ -46,3 +46,4 @@ spring.jpa.open-in-view=false
 spring.jpa.hibernate.ddl-auto=update
 #// xï¿½a cï¿½c b?ng trong c? s? d? li?u
 #spring.jpa.hibernate.ddl-auto=create-drop
+src/main/resources/application.properties
