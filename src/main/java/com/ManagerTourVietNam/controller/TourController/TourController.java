@@ -1,10 +1,15 @@
 package com.ManagerTourVietNam.controller.TourController;
 
+import com.ManagerTourVietNam.model.ServiceModel.Service;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourModel.Tour;
+import com.ManagerTourVietNam.repository.TourRepository.TourRepository;
 import com.ManagerTourVietNam.service.TourDetailService.TourDetailService;
 import com.ManagerTourVietNam.service.TourService.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
@@ -12,6 +17,7 @@ import java.util.Map;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -19,6 +25,8 @@ import java.util.Optional;
 public class TourController {
     @Autowired
     private TourService tourService;
+    @Autowired
+    private TourRepository tourRepository;
 
 
     // get all tour
@@ -75,6 +83,21 @@ public class TourController {
     public void updateDepart(@RequestParam("idtour") String idtour, @RequestParam("depart") LocalDate newDepart)
     {
         tourService.updateDepart(idtour,newDepart);
+    }
+
+    // Lấy danh sách người dùng với phân trang
+    @GetMapping("/api/tour/phantrang")
+    public ResponseEntity<Page<Tour>> getTours(@RequestParam int page, @RequestParam int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize); // Spring Data bắt đầu từ 0
+        Page<Tour> pageTours = tourRepository.findAll(pageable);
+        return ResponseEntity.ok(pageTours);
+    }
+
+    @GetMapping("/api/tour-ids")
+    public List<String> getAllTourIds() {
+        return tourRepository.findAll().stream()
+                .map(Tour::getIdtour)
+                .collect(Collectors.toList());
     }
 //
 

@@ -2,12 +2,16 @@ package com.ManagerTourVietNam.controller.TourDetailController;
 
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourModel.Tour;
+import com.ManagerTourVietNam.model.invoice.invoice;
 import com.ManagerTourVietNam.service.TourDetailService.TourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -41,6 +45,9 @@ public class TourDetailController {
     public void getTotalPrice(@RequestParam("id") String idtour) {
          tourDetailService.getTotalPrice(idtour);
     }
+
+
+
 
 
 }

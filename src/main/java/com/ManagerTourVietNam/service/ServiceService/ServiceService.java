@@ -1,16 +1,23 @@
 package com.ManagerTourVietNam.service.ServiceService;
 
 import com.ManagerTourVietNam.dto.dtoService.ServiceStatistics;
+import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.ServiceRepository.ServiceHistoryRepository;
 import com.ManagerTourVietNam.repository.ServiceRepository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -102,6 +109,20 @@ public class ServiceService {
         public List<com.ManagerTourVietNam.model.ServiceModel.Service> getInactiveService(boolean status){
             return serviceRepository.findByStatus(status);
         }
+
+    public Map<String, Object> getServicesWithPagination(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Page<com.ManagerTourVietNam.model.ServiceModel.Service> pageServices = serviceRepository.findAll(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("services", pageServices.getContent());
+        response.put("currentPage", pageServices.getNumber());
+        response.put("totalItems", pageServices.getTotalElements());
+        response.put("totalPages", pageServices.getTotalPages());
+
+        return response;
+    }
+
 
 
 
