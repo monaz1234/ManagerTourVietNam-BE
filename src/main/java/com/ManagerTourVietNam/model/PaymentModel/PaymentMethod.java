@@ -17,7 +17,7 @@ public class PaymentMethod {
     @Column(name = "description")
     private String description;
     @Column(name = "free_percentage")
-    private double fee_percentage;
+    private Double fee_percentage;
     @Column(name = "supported_currencies")
     private String supported_currencies;
     @Column(name = "transaction_limit")
@@ -61,11 +61,11 @@ public class PaymentMethod {
         this.description = description;
     }
 
-    public double getFee_percentage() {
+    public Double getFee_percentage() {
         return fee_percentage;
     }
 
-    public void setFee_percentage(double fee_percentage) {
+    public void setFee_percentage(Double fee_percentage) {
         this.fee_percentage = fee_percentage;
     }
 
@@ -113,18 +113,21 @@ public class PaymentMethod {
 
     }
 
-    public PaymentMethod(String id_method, String payment_code, String payment_name, String description, double fee_percentage, String supported_currencies, Long transaction_limit, boolean is_active, LocalDate created_at, LocalDate updated_at) {
+
+
+    public PaymentMethod(String id_method, String payment_code, String payment_name, String description, Double fee_percentage, String supported_currencies, Long transaction_limit, boolean is_active, LocalDate created_at, LocalDate updated_at) {
         this.id_method = id_method;
         this.payment_code = payment_code;
         this.payment_name = payment_name;
         this.description = description;
-        this.fee_percentage = fee_percentage;
+        this.fee_percentage = fee_percentage != null ? fee_percentage : 0.0; // Gán giá trị mặc định nếu fee_percentage là null
         this.supported_currencies = supported_currencies;
         this.transaction_limit = transaction_limit;
         this.is_active = is_active;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
+
 
     @Override
     public String toString() {
