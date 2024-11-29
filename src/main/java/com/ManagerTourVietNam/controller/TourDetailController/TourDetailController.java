@@ -74,7 +74,7 @@ public class TourDetailController {
     // lấy ra tổng giá trị của tour, bao gồm giá service, hotel, vehicles
     @GetMapping("/tour_detail/total_price")
     public void getTotalPrice(@RequestParam("id") String idtour) {
-         tourDetailService.getTotalPrice(idtour);
+        tourDetailService.getTotalPrice(idtour);
     }
 
 
@@ -86,7 +86,7 @@ public class TourDetailController {
     @GetMapping("/tourdetailbyidtour/{idtour}")
     public Optional<TourDetail> getTourDetailsByTour(@PathVariable("idtour") String idtour) {
         Optional<Tour> tourOptional = tourService.findTourById(idtour);
-            return tourDetailService.findTourDetailByIdTour(tourOptional.get());
+        return tourDetailService.findTourDetailByIdTour(tourOptional.get());
 
     }
 
