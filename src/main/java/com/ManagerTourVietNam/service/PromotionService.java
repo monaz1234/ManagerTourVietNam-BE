@@ -1,6 +1,4 @@
 package com.ManagerTourVietNam.service;
-
-
 import com.ManagerTourVietNam.model.Promotion;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.PromotionRepository;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class PromotionService {
     @Autowired
@@ -31,6 +28,7 @@ public class PromotionService {
             promotion.setName(promotionDetails.getName());
             promotion.setDescription(promotionDetails.getDescription());
             promotion.setStatus(promotionDetails.isStatus());
+            promotion.setDiscount(promotionDetails.getDiscount());
             return promotionRepository.save(promotion);
         }
         return null;
@@ -50,12 +48,7 @@ public class PromotionService {
     public List<Promotion> searchPromotions(String query) {
         return promotionRepository.findByNameContainingIgnoreCase(query); // Hoặc mã tương tự nếu bạn có phương thức tìm kiếm theo mã
     }
-
-
-
-
-
-
-
-
+    public Optional<Promotion> findByCode(String code) {
+        return promotionRepository.findByCode(code);
+    }
 }
