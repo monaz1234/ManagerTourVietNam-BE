@@ -4,11 +4,11 @@ import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
 import com.ManagerTourVietNam.model.TourModel.Tour;
 import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,11 +21,6 @@ public class TourDetailService {
     public List<TourDetail> getAllTourDetail() {
         return tourDetailRepository.findAll();
     }
-
-//    public Optional<TourDetail> findTourDetailById(String id)
-//    {
-//        return tourDetailRepository.findById(id);
-//    }
 
     public List<TourDetail> getAllTourDetailWithTotalPrice() {
         List<TourDetail> tourDetails = tourDetailRepository.findAll();
@@ -55,7 +50,6 @@ public class TourDetailService {
     // total_price trong bảng tour_detail
     public void getTotalPrice(String idtour) {
         Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(idtour);
-
         if (optionalTourDetail.isPresent()) {
             TourDetail tourDetail = optionalTourDetail.get();
             double servicePrice = getServicePrice(idtour);
@@ -74,7 +68,8 @@ public class TourDetailService {
         return tourDetailRepository.save(tourDetail);
     }
 
-    public TourDetail updateTourDetail(String idtour, String id_vehicles, String id_hotel, String id_service, TourDetail tourSupDetails)
+    public TourDetail updateTourDetail(String idtour, String id_vehicles, String id_hotel, String id_service,
+            TourDetail tourSupDetails)
             throws UserPrincipalNotFoundException {
 
         // Tạo đối tượng TourDetailId từ các thông tin
@@ -110,25 +105,23 @@ public class TourDetailService {
         }).orElseThrow(() -> new UserPrincipalNotFoundException("Tour detail not found with id " + tourDetailId));
     }
 
-
     public void deleteTourDetail(String idtour, String id_vehicles, String id_hotel, String id_service) {
         TourDetailId tourDetailId = new TourDetailId(idtour, id_vehicles, id_hotel, id_service);
         tourDetailRepository.deleteById(tourDetailId);
     }
 
-
     public Optional<TourDetail> findTourDetailByIdTour(Tour idtour) {
         return tourDetailRepository.findIdTourDetailByIdtour(idtour.getIdtour());
     }
 
+    // Lấy thông tin tour detail theo ID
+    public Optional<TourDetail> getTourDetailById(String idtour) {
+        return tourDetailRepository.findByIdtour(idtour);
+    }
 
-
-
-
-
-
-
-
-
+    // Lưu thông tin tour detail
+    public void saveTourDetail(TourDetail tourDetail) {
+        tourDetailRepository.save(tourDetail);
+    }
 
 }

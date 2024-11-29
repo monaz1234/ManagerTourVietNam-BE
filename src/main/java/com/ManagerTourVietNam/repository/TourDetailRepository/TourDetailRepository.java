@@ -1,5 +1,6 @@
 package com.ManagerTourVietNam.repository.TourDetailRepository;
 
+import com.ManagerTourVietNam.model.Promotion;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
 import com.ManagerTourVietNam.model.TourModel.Tour;
@@ -26,4 +27,8 @@ public interface TourDetailRepository extends JpaRepository<TourDetail, TourDeta
 
     @Query("SELECT h.price FROM TourDetail td JOIN td.hotel h WHERE td.idtour = :idtour")
     int findHotelPriceByTourId(@Param("idtour") String idtour);
+
+    @Query("SELECT p FROM Promotion p WHERE p.promotion_code = :promotion_code AND p.status = true")
+    Optional<Promotion> findByPromotionCode(@Param("promotion_code") String promotion_code);
+
 }
