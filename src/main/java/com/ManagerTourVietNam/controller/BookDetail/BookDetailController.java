@@ -1,5 +1,6 @@
 package com.ManagerTourVietNam.controller.BookDetail;
 
+import com.ManagerTourVietNam.model.Book.Book;
 import com.ManagerTourVietNam.model.BookDetail.BookDetail;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.BookDetailReponsitory.BookDetailReponsitory;
@@ -76,5 +77,11 @@ public class BookDetailController {
     public ResponseEntity<List<BookDetail>> searchBookDetail(@RequestParam String query) {
         List<BookDetail> bookDetails = bookDerailService.searchBookDetails(query);
         return new ResponseEntity<>(bookDetails, HttpStatus.OK);
+    }
+
+    // API để lấy thông tin BookDetail theo Book (idbook)
+    @GetMapping("/api/bookdetailbyidbook/{idbook}")
+    public List<BookDetail> getBookDetailsByBook(@PathVariable("idbook") Book idbook) {
+        return bookDerailService.findBookDetailByIdbook(idbook);
     }
 }
