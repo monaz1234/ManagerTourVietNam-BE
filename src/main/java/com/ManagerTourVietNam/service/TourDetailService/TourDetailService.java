@@ -2,25 +2,14 @@ package com.ManagerTourVietNam.service.TourDetailService;
 
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
-import com.ManagerTourVietNam.model.User;
-import com.ManagerTourVietNam.model.invoice.invoice;
-import com.ManagerTourVietNam.repository.HotelRepository.HotelRepository;
-import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
-import com.ManagerTourVietNam.repository.VehiclesRepository.*;
 import com.ManagerTourVietNam.model.TourModel.Tour;
 import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -32,6 +21,11 @@ public class TourDetailService {
     public List<TourDetail> getAllTourDetail() {
         return tourDetailRepository.findAll();
     }
+
+//    public Optional<TourDetail> findTourDetailById(String id)
+//    {
+//        return tourDetailRepository.findById(id);
+//    }
 
     public List<TourDetail> getAllTourDetailWithTotalPrice() {
         List<TourDetail> tourDetails = tourDetailRepository.findAll();
@@ -120,6 +114,11 @@ public class TourDetailService {
     public void deleteTourDetail(String idtour, String id_vehicles, String id_hotel, String id_service) {
         TourDetailId tourDetailId = new TourDetailId(idtour, id_vehicles, id_hotel, id_service);
         tourDetailRepository.deleteById(tourDetailId);
+    }
+
+
+    public Optional<TourDetail> findTourDetailByIdTour(Tour idtour) {
+        return tourDetailRepository.findIdTourDetailByIdtour(idtour.getIdtour());
     }
 
 

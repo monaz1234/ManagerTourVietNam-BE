@@ -1,6 +1,7 @@
 package com.ManagerTourVietNam.service.TypeTourService;
 
 import com.ManagerTourVietNam.model.PaymentModel.PaymentMethod;
+import com.ManagerTourVietNam.model.TourModel.Tour;
 import com.ManagerTourVietNam.model.TypeTourModel.TypeTour;
 import com.ManagerTourVietNam.repository.TypeTourRepository.TypeTourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class TypeTourService {
     public List<TypeTour> getAllTypeTour(){
         return typeTourRepository.findAll();
     };
+
+
     //update name type tour by id
    public ResponseEntity<TypeTour> updateNameTypeTourByID(String id, String newName)
    {
@@ -71,5 +74,7 @@ public class TypeTourService {
             return typeTourRepository.save(typetours); // Lưu thay đổi vào cơ sở dữ liệu
         }).orElseThrow(() -> new UserPrincipalNotFoundException("User not found with id " + id));
     }
+
+
 
 }
