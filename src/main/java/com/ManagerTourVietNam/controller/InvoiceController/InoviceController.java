@@ -1,6 +1,7 @@
 package com.ManagerTourVietNam.controller.InvoiceController;
 
 
+import com.ManagerTourVietNam.mail.InvoicePDFGenerator;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.InvoiceRepository.InvoiceRepository;
 import com.ManagerTourVietNam.service.InvoiceService.InvoiceService;
@@ -85,6 +86,20 @@ public class InoviceController {
         }
         return new ResponseEntity<>(invoices, HttpStatus.OK);
     }
+    @GetMapping("api/invoicepdf")
+    public String generateInvoice(
+            @RequestParam String name,
+            @RequestParam String idHoaDon,
+            @RequestParam String idTour,
+            @RequestParam int soLuongChoNgoi,
+            @RequestParam double tongGiaTien,
+            @RequestParam String phuongThucThanhToan) {
 
+        InvoicePDFGenerator pdfGenerator = new InvoicePDFGenerator();
+        pdfGenerator.generateInvoice(name, idHoaDon, idTour, soLuongChoNgoi, tongGiaTien, phuongThucThanhToan);
+
+        String dirIUploadImageVehicle = System.getProperty("user.dir") + "/public/pdf";
+        return "Hóa đơn đã được tạo tại: " + dirIUploadImageVehicle + "/hoadon_" + idHoaDon + ".pdf";
+    }
 
 }
