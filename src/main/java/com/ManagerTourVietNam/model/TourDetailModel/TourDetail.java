@@ -10,6 +10,7 @@ import com.ManagerTourVietNam.model.TourModel.Tour;
 @Table(name = "tour_detail")
 @IdClass(TourDetailId.class)
 public class TourDetail {
+
     @Id
     @Column(name = "idtour",  length = 4)
     private String idtour;
