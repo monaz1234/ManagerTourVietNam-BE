@@ -19,4 +19,8 @@ public interface BookDetailReponsitory extends JpaRepository<BookDetail, String>
     @Query("SELECT bd FROM BookDetail bd WHERE bd.idbook = :idbook")
     List<BookDetail> findBookDetailByIdbook(@Param("idbook") Book idbook);
 
+    @Query("SELECT bd.idbookdetail FROM BookDetail bd")
+    List<String> getAllBookDetailIds();
+
+
 }
