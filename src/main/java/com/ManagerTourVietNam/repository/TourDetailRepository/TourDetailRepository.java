@@ -3,6 +3,7 @@ package com.ManagerTourVietNam.repository.TourDetailRepository;
 import com.ManagerTourVietNam.model.Promotion;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
+import com.ManagerTourVietNam.model.TourModel.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,10 @@ public interface TourDetailRepository extends JpaRepository<TourDetail, TourDeta
 
     @Query("SELECT t FROM TourDetail t WHERE t.idtour = :idtour")
     Optional<TourDetail> findByIdtour(@Param("idtour") String idtour);
+
+    @Query("SELECT t FROM TourDetail t WHERE t.idtour = :idtour")
+    Optional<TourDetail> findIdTourDetailByIdtour(@Param("idtour") String idtour);
+
 
     //price---------------------------------------------------------------------------------
     @Query("SELECT s.price FROM TourDetail td JOIN td.service s WHERE td.idtour = :idtour")

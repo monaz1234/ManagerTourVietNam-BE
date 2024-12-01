@@ -4,6 +4,7 @@ package com.ManagerTourVietNam.controller.BookController;
 import com.ManagerTourVietNam.model.Book.Book;
 import com.ManagerTourVietNam.repository.BookRepository.BookRepository;
 import com.ManagerTourVietNam.service.BookService.BookService;
+import com.ManagerTourVietNam.service.BookService.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,9 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @GetMapping("api/books")
     public List<Book> GetAllBook(){
         return bookService.getAllBook();
@@ -34,6 +38,36 @@ public class BookController {
     public Book addBook(@RequestBody Book book){
         return bookService.addBook(book);
     }
+
+
+    @PostMapping("api/book/create")
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        // Tạo mã ID tự động
+        String generatedId = sequenceGeneratorService.generateBookId();
+
+        // Gán mã ID cho Book
+        book.setIdbook(generatedId);
+
+        // Lưu vào cơ sở dữ liệu
+        Book savedBook = bookRepository.save(book);
+
+        return ResponseEntity.ok(savedBook);
+    }
+
+
+//    @PostMapping("/create")
+//    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+//        // Tạo mã ID tự động
+//        String generatedId = sequenceGeneratorService.generateBookId();
+//
+//        // Gán mã ID cho Book
+//        book.setIdbook(generatedId);
+//
+//        // Lưu vào cơ sở dữ liệu
+//        Book savedBook = bookRepository.save(book);
+//
+//        return ResponseEntity.ok(savedBook);
+//    }
 
     @PutMapping("api/book/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book bookDetail){
