@@ -71,4 +71,8 @@ public class InvoiceDetailService {
         return invoiceDetailRepository.searchInvoiceDetails(query, query,query, query);
     }
 
+    public List<invoice_detail> getInvoiceDetailsByIdInvoice(String idinvoice) {
+        return invoiceDetailRepository.findByIdinvoice_IdInvoice(idinvoice);
+    }
+
 }
