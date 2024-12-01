@@ -39,7 +39,6 @@ public class BookController {
         return bookService.addBook(book);
     }
 
-
     @PostMapping("api/book/create")
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         // Tạo mã ID tự động

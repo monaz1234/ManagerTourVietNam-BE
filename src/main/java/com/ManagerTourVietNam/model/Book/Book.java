@@ -11,7 +11,7 @@ public class Book {
     @Column(name = "IDBook", length = 4)
     private String idbook;
     @Column(name = "Status")
-    private int status;
+    private boolean status;
 
     @ManyToOne
     @JoinColumn(name = "IDAccount", referencedColumnName = "IDAccount")
@@ -29,11 +29,11 @@ public class Book {
         this.idbook = idbook;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -54,7 +54,7 @@ public class Book {
     }
 
     public Book(){}
-    public Book(String idbook, int status, Account account, Tour tour) {
+    public Book(String idbook, boolean status, Account account, Tour tour) {
         this.idbook = idbook;
         this.status = status;
         this.account = account;
