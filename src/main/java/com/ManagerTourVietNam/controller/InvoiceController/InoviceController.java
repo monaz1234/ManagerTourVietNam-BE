@@ -122,11 +122,8 @@ public class InoviceController {
     }
 
 
-        InvoicePDFGenerator pdfGenerator = new InvoicePDFGenerator();
-        pdfGenerator.generateInvoice(name, idHoaDon, idTour, soLuongChoNgoi, tongGiaTien, phuongThucThanhToan);
 
-        String dirIUploadImageVehicle = System.getProperty("user.dir") + "/public/pdf";
-        return "Hóa đơn đã được tạo tại: " + dirIUploadImageVehicle + "/hoadon_" + idHoaDon + ".pdf";
-    }
+
+
 
 }

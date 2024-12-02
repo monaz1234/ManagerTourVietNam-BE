@@ -8,5 +8,5 @@ public class MyConstants {
     public static final String MY_PASSWORD = "twfp bdla wegh lyng";
 
     // And receiver!
-    public static final String FRIEND_EMAIL = "lamtuankiet20122003@gmail.com";
+    public static final String FRIEND_EMAIL = "";
 }
