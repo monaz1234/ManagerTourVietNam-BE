@@ -1,8 +1,6 @@
 package com.ManagerTourVietNam.controller.InvoiceController;
 
 
-import com.ManagerTourVietNam.mail.InvoicePDFGenerator;
-import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.InvoiceRepository.InvoiceRepository;
 import com.ManagerTourVietNam.service.InvoiceService.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
