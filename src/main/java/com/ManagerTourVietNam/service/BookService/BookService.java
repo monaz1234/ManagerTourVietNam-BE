@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.ManagerTourVietNam.repository.AccountRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.*;
@@ -48,7 +49,7 @@ public class BookService {
 
         return missingIds; // Trả về danh sách các ID bị thiếu
     }
-
+    @Transactional
     public String generateNextBookId() {
         // Log the current existing IDs for debugging
         List<String> existingIds = bookRepository.findAll().stream()
@@ -85,13 +86,6 @@ public class BookService {
 
     }
 
-    public void fillMissingIds(List<String> missingIds) {
-        for (String missingId : missingIds) {
-            Book newBook = new Book();
-            newBook.setIdbook(missingId);
-            bookRepository.save(newBook); // Lưu bản ghi mới vào cơ sở dữ liệu
-        }
-    }
 
     public Book updateBook(String id, Book bookDetails)throws UserPrincipalNotFoundException {
         return bookRepository.findById(id).map(book -> {

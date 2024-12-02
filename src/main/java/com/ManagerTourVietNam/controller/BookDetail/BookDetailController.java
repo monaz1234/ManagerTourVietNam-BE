@@ -38,15 +38,11 @@ public class BookDetailController {
 
     @PostMapping("api/bookdetail/create")
     public ResponseEntity<BookDetail> createBookDetail(@RequestBody BookDetail bookDetail) {
-        // Tạo mã ID tự động
-        String generatedId = sequenceGeneratorService.generateBookDetailId();
-
-        // Gán mã ID cho BookDetail
-        bookDetail.setIdbookdetail(generatedId);
-
-        // Lưu vào cơ sở dữ liệu
+        if (bookDetail.getIdbookdetail() == null || bookDetail.getIdbookdetail().isEmpty()) {
+            String generatedId = sequenceGeneratorService.generateBookDetailId();
+            bookDetail.setIdbookdetail(generatedId);  // Tạo ID tự động
+        }
         BookDetail savedBookDetail = bookDetailReponsitory.save(bookDetail);
-
         return ResponseEntity.ok(savedBookDetail);
     }
 
