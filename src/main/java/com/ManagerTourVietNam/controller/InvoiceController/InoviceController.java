@@ -1,5 +1,7 @@
 package com.ManagerTourVietNam.controller.InvoiceController;
 
+
+import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.InvoiceRepository.InvoiceRepository;
 import com.ManagerTourVietNam.service.InvoiceService.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,22 +48,24 @@ public class InoviceController {
       return ResponseEntity.ok(updatedInoviceSub);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .body(null); // You can customize the error message as needed
+              .body(null); // You can customize the error message as needed
     }
   }
 
   // Xóa người dùng
   @DeleteMapping("/api/invoice/{id}")
-  public void deleteInovice(@PathVariable String id) {
+  public void deleteInovice(@PathVariable String id){
     invoiceService.deleteInvoice(id);
   }
+
 
   @GetMapping("/api/invoice/{id}")
   public ResponseEntity<invoice> findInvoiceById(@PathVariable String id) {
     Optional<invoice> invoiceSub = invoiceService.findInvoiceById(id);
     return invoiceSub.map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
   }
+
 
   @GetMapping("/api/invoice/phantrang")
   public ResponseEntity<Page<invoice>> getInvoices(@RequestParam int page, @RequestParam int pageSize) {
@@ -70,11 +74,12 @@ public class InoviceController {
     return ResponseEntity.ok(pageInvoice);
   }
 
+
   @GetMapping("/api/invoice-ids")
   public List<String> getAllInvoiceIds() {
     return invoiceRepository.findAll().stream()
-        .map(invoice::getIdinvoice)
-        .collect(Collectors.toList());
+            .map(invoice::getIdinvoice)
+            .collect(Collectors.toList());
   }
 
   @GetMapping("/api/invoices/search")
@@ -85,45 +90,31 @@ public class InoviceController {
     }
     return new ResponseEntity<>(invoices, HttpStatus.OK);
   }
-
-  @GetMapping("api/invoicepdf")
-    public String generateInvoice(
-            @RequestParam String name,
-            @RequestParam String idHoaDon,
-            @RequestParam String idTour,
-            @RequestParam int soLuongChoNgoi,
-            @RequestParam double tongGiaTien,
-            @RequestParam String phuongThucThanhToan) {
-
-    // Lấy tổng tiền theo ngày
-    @GetMapping("/api/invoices/total-by-date")
-    public ResponseEntity<BigDecimal> getTotalByDate(
-            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        System.out.println("Received date: " + date);  // Log ra giá trị ngày nhận được
-        BigDecimal totalAmount = invoiceRepository.findTotalAmountByDate(date);
-        return ResponseEntity.ok(totalAmount);
-    }
+  // Lấy tổng tiền theo ngày
+  @GetMapping("/api/invoices/total-by-date")
+  public ResponseEntity<BigDecimal> getTotalByDate(
+          @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    System.out.println("Received date: " + date);  // Log ra giá trị ngày nhận được
+    BigDecimal totalAmount = invoiceRepository.findTotalAmountByDate(date);
+    return ResponseEntity.ok(totalAmount);
+  }
 
 
 
-    // Lấy tổng tiền theo tháng
-    @GetMapping("/api/invoices/total-by-month")
-    public ResponseEntity<BigDecimal> getTotalByMonth(
-            @RequestParam("month") int month, @RequestParam("year") int year) {
-        BigDecimal totalAmount = invoiceRepository.findTotalAmountByMonth(month, year);
-        return ResponseEntity.ok(totalAmount);
-    }
+  // Lấy tổng tiền theo tháng
+  @GetMapping("/api/invoices/total-by-month")
+  public ResponseEntity<BigDecimal> getTotalByMonth(
+          @RequestParam("month") int month, @RequestParam("year") int year) {
+    BigDecimal totalAmount = invoiceRepository.findTotalAmountByMonth(month, year);
+    return ResponseEntity.ok(totalAmount);
+  }
 
-    // Lấy tổng tiền theo năm
-    @GetMapping("/api/invoices/total-by-year")
-    public ResponseEntity<BigDecimal> getTotalByYear(@RequestParam("year") int year) {
-        BigDecimal totalAmount = invoiceRepository.findTotalAmountByYear(year);
-        return ResponseEntity.ok(totalAmount);
-    }
-
-
-
-
+  // Lấy tổng tiền theo năm
+  @GetMapping("/api/invoices/total-by-year")
+  public ResponseEntity<BigDecimal> getTotalByYear(@RequestParam("year") int year) {
+    BigDecimal totalAmount = invoiceRepository.findTotalAmountByYear(year);
+    return ResponseEntity.ok(totalAmount);
+  }
 
 
 }

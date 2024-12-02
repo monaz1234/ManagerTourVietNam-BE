@@ -22,17 +22,39 @@ public class SimpleEmailExampleController {
 
         String htmlMsg = "<html>" +
                 "<body style='font-family: Arial, sans-serif; color: #333; text-align: center;'>" +
-                "<h1>Chào mừng bạn đến với Tour Du Lịch Việt Nam!</h1>" +
-                "<img src='https://www.example.com/logo.png' alt='Logo' style='width: 200px; margin: 20px 0;'>" +
-                "<p>Chúng tôi xin chúc mừng bạn đã đặt tour thành công!</p>" +
-                "<p>Xin vui lòng đóng tiền tại công ty du lịch ABC theo địa chỉ: <strong>ABC XYZ</strong></p>" +
-                "<p>Cảm ơn bạn đã tin tưởng và lựa chọn dịch vụ của chúng tôi.</p>" +
+                "<h1>Welcome to Vietnam Tours!</h1>" +
+                "<p>We are pleased to inform you that your tour booking was successful!</p>" +
+                "<p>Please proceed with the payment at ABC Travel Company, address: <strong>ABC XYZ</strong></p>" +
+                "<p>Thank you for choosing our services.</p>" +
                 "</body>" +
                 "</html>";
-        String subject = "Xác Nhận Đặt Tour Thành Công";
+
+        String subject = "Tour Booking Confirmation";
+
         try {
             sendEmail(recipientEmail, subject, htmlMsg);
             return "Email Sent to " + recipientEmail;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return "Error sending email";
+        }
+    }
+    @GetMapping("/api/sendemails2")
+    public String sendPaymentConfirmationEmail(@RequestParam String recipientEmail) {
+        String htmlMsg = "<html>" +
+                "<body style='font-family: Arial, sans-serif; color: #333; text-align: center;'>" +
+                "<h1>Payment Confirmation</h1>" +
+                "<p>Your payment has been successfully confirmed!</p>" +
+                "<p>Thank you for completing your payment for the tour at ABC Travel Company.</p>" +
+                "<p>We look forward to serving you during your tour.</p>" +
+                "</body>" +
+                "</html>";
+
+        String subject = "Payment Confirmation for Your Tour";
+
+        try {
+            sendEmail(recipientEmail, subject, htmlMsg);
+            return "Payment confirmation email sent to " + recipientEmail;
         } catch (MessagingException e) {
             e.printStackTrace();
             return "Error sending email";
