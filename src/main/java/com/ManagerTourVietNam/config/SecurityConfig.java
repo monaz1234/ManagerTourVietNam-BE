@@ -16,24 +16,16 @@
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        http
 //                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/home/**", "/about-us", "/customer/**", "/news").permitAll() // được phép truy cập không xác thực
+//                        .requestMatchers("/home/**", "/about-us", "/customer/**", "/news", "/api/**").permitAll() // được phép truy cập không xác thực
 //                        .anyRequest().authenticated() // còn lại phải xác thực chuyển đến trang đăng nhập
 //                )
 //                .formLogin((form) -> form
 //                        .loginPage("/login")
 //                        .permitAll()
 //                )
-//                .logout(LogoutConfigurer::permitAll)
-//                .cors((cors) -> cors
-//                        .configurationSource(request -> {
-//                            var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-//                            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
-//                            corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "HEAD"));
-//                            corsConfiguration.setAllowedHeaders(List.of("*"));
-//                            corsConfiguration.setAllowCredentials(true);
-//                            return corsConfiguration;
-//                        })
-//                );
+//                .logout(LogoutConfigurer::permitAll);
+//
+//
 //
 //        return http.build();
 //    }

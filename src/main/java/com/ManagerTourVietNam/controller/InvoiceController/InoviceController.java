@@ -8,10 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.ManagerTourVietNam.model.invoice.invoice;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,13 +82,38 @@ public class InoviceController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("api/invoices/search")
+    @GetMapping("/api/invoices/search")
     public ResponseEntity<List<invoice>> searchInvoices(@RequestParam String query) {
         List<invoice> invoices = invoiceService.findInvoiceByAllFields(query);
         if (invoices.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Không tìm thấy
         }
         return new ResponseEntity<>(invoices, HttpStatus.OK);
+    }
+    // Lấy tổng tiền theo ngày
+    @GetMapping("/api/invoices/total-by-date")
+    public ResponseEntity<BigDecimal> getTotalByDate(
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        System.out.println("Received date: " + date);  // Log ra giá trị ngày nhận được
+        BigDecimal totalAmount = invoiceRepository.findTotalAmountByDate(date);
+        return ResponseEntity.ok(totalAmount);
+    }
+
+
+
+    // Lấy tổng tiền theo tháng
+    @GetMapping("/api/invoices/total-by-month")
+    public ResponseEntity<BigDecimal> getTotalByMonth(
+            @RequestParam("month") int month, @RequestParam("year") int year) {
+        BigDecimal totalAmount = invoiceRepository.findTotalAmountByMonth(month, year);
+        return ResponseEntity.ok(totalAmount);
+    }
+
+    // Lấy tổng tiền theo năm
+    @GetMapping("/api/invoices/total-by-year")
+    public ResponseEntity<BigDecimal> getTotalByYear(@RequestParam("year") int year) {
+        BigDecimal totalAmount = invoiceRepository.findTotalAmountByYear(year);
+        return ResponseEntity.ok(totalAmount);
     }
 
 
