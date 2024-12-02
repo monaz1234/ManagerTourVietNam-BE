@@ -42,7 +42,6 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
-
     @Autowired
     private ResourceLoader resourceLoader;
     String dirIUploadImageAccount = System.getProperty("user.dir") + "/public/image/account/";

@@ -1,6 +1,7 @@
 package com.ManagerTourVietNam.service.BookDetailService;
 
 import com.ManagerTourVietNam.model.Account;
+import com.ManagerTourVietNam.model.Book.Book;
 import com.ManagerTourVietNam.model.BookDetail.BookDetail;
 import com.ManagerTourVietNam.repository.BookDetailReponsitory.BookDetailReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +68,12 @@ public class BookDerailService {
     public List<BookDetail> searchBookDetails(String query) {
         return bookdetailReponsitory.findByIdbookdetailContaining(query);
     }
+
+
+    // Tìm BookDetail theo Book (idbook)
+    public List<BookDetail> findBookDetailByIdbook(Book idbook) {
+        return bookdetailReponsitory.findBookDetailByIdbook(idbook);
+    }
+
+
 }
