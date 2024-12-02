@@ -39,14 +39,17 @@ public class BookController {
         return bookService.addBook(book);
     }
 
-
     @PostMapping("api/book/create")
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         // Tạo mã ID tự động
-        String generatedId = sequenceGeneratorService.generateBookId();
 
+        //String generatedId = sequenceGeneratorService.generateBookId();
+        if (book.getIdbook() == null || book.getIdbook().isEmpty()) {
+            String generatedId = sequenceGeneratorService.generateBookId();
+            book.setIdbook(generatedId);
+        }
         // Gán mã ID cho Book
-        book.setIdbook(generatedId);
+        //book.setIdbook(generatedId);
 
         // Lưu vào cơ sở dữ liệu
         Book savedBook = bookRepository.save(book);

@@ -90,32 +90,46 @@ public class TourDetailController {
 
     }
 
-
-
-
-
     @PostMapping("/apply-promotion")
     public ResponseEntity<Map<String, Object>> applyPromotion(@RequestBody ApplyPromotionRequest request) {
         Optional<TourDetail> optionalTourDetail = tourDetailService.getTourDetailById(request.getIdtour());
+
+        // Kiểm tra mã khuyến mãi trong database
+        Optional<Promotion> promotion = promotionService.findByCode(request.getCode());
         System.out.println("Request nhận được: idtour=" + request.getIdtour() + ", code=" + request.getCode() + ", quantity=" + request.getQuantity());
+
         if (optionalTourDetail.isPresent()) {
             TourDetail tourDetail = optionalTourDetail.get();
 
+            // Kiểm tra nếu số lượng chỗ trống là 0
+            if (tourDetail.getPlace() <= 0) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("error", "Tour đã hết chỗ. Không thể đặt thêm.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            String promotionCode = promotion.get().getPromotion_code();
+            System.out.println("promotion_code: " + promotionCode); // Log giá trị promotion_code
+
             double basePrice = tourDetail.getTotal_price();
             System.out.println("Base Price: " + basePrice); // Log giá trị basePrice
+
             double discount = checkPromotionCode(request.getCode(), basePrice);
             double finalPrice = (basePrice * request.getQuantity()) - discount;
 
-            /* Cập nhật số lượng chỗ trống
+            // Cập nhật số lượng chỗ trống
             int updatedPlace = tourDetail.getPlace() - request.getQuantity();
             tourDetail.setPlace(updatedPlace);
-            tourDetailService.saveTourDetail(tourDetail);*/
+            tourDetailService.saveTourDetail(tourDetail);
 
             Map<String, Object> response = new HashMap<>();
             response.put("finalPrice", finalPrice);
             response.put("discount", discount);
+            response.put("promotion_code", promotionCode);
+
             System.out.println("Final Price: " + finalPrice);
             System.out.println("Discount: " + discount);
+            System.out.println("promotion_code: " + promotionCode);
             //response.put("remainingPlace", updatedPlace);
 
             return ResponseEntity.ok(response);
