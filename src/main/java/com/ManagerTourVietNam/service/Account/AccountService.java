@@ -85,6 +85,11 @@ public class AccountService {
     }
 
 
+    public Optional<String> getIdTypeUserByUsername(String username) {
+        return accountRepository.findIdTypeUserByUsername(username);
+    }
+
+
 
 
 
@@ -118,6 +123,24 @@ public class AccountService {
     public Optional<String> findIdUserByUsername(String username) {
         return accountRepository.findByUsername(username).map(Account::getUser).map(User::getIduser);
     }
+
+    public String registerAccount(Account newAccount) {
+        Optional<Account> existingAccount = accountRepository.findAccountByUsername(newAccount.getUsername());
+        if (existingAccount.isPresent()) {
+            return "Username đã tồn tại. Vui lòng chọn tên khác.";
+        }
+        accountRepository.save(newAccount);
+        return "Đăng ký thành công!";
+    }
+
+    public Account getAccountByUsername(String username) {
+        return accountRepository.findAccountByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Account not found for username: " + username));
+    }
+
+
+
+
 
 
 }
