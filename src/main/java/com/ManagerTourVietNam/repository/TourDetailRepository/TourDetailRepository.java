@@ -7,9 +7,20 @@ import com.ManagerTourVietNam.model.TourModel.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface TourDetailRepository extends JpaRepository<TourDetail, TourDetailId> {
+
+
+    @Query("SELECT td.idtourdetail FROM TourDetail td")
+    List<String> getAllTourDetailIds();
+
+    @Query("SELECT t FROM TourDetail t WHERE t.idtour = :idtour")
+    List<TourDetail> findSingleByIdtour(@Param("idtour") String idtour);
+
+
 
     @Query("SELECT t FROM TourDetail t WHERE t.idtour = :idtour")
     Optional<TourDetail> findByIdtour(@Param("idtour") String idtour);
@@ -30,5 +41,6 @@ public interface TourDetailRepository extends JpaRepository<TourDetail, TourDeta
 
     @Query("SELECT p FROM Promotion p WHERE p.promotion_code = :promotion_code AND p.status = true")
     Optional<Promotion> findByPromotionCode(@Param("promotion_code") String promotion_code);
+
 
 }
