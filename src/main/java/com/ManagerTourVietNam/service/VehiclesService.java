@@ -34,6 +34,7 @@ public class VehiclesService {
             vehicles.setDriver(vehiclesDetails.getDriver());
             vehicles.setImage(vehiclesDetails.getImage());
             vehicles.setDescription(vehiclesDetails.getDescription());
+            vehicles.setPrice(vehiclesDetails.getPrice());
             vehicles.setStatus(vehiclesDetails.isStatus());
             return vehiclesRepository.save(vehicles);
         }

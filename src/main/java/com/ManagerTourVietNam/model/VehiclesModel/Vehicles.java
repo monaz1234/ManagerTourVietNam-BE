@@ -23,9 +23,9 @@ public class Vehicles {
     @Column(name = "status")
     private boolean status; // tương ứng với cột 'status' (một giá trị boolean)
     @Column(name = "price")
-    private double price;
+    private int price;
 
-    public Vehicles(String id_vehicles, String name_vehicles, int place_vehicles, String driver, String image, String description, boolean status, double price) {
+    public Vehicles(String id_vehicles, String name_vehicles, int place_vehicles, String driver, String image, String description, boolean status, int price) {
         this.id_vehicles = id_vehicles;
         this.name_vehicles = name_vehicles;
         this.place_vehicles = place_vehicles;
@@ -99,7 +99,7 @@ public class Vehicles {
         this.status = status;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
