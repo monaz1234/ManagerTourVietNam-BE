@@ -32,6 +32,7 @@ public class HotelService {
             hotel.setDescription(hotelDetail.getDescription());
             hotel.setImage(hotelDetail.getImage());
             hotel.setStatus(hotelDetail.isStatus());
+            hotel.setPrice(hotelDetail.getPrice());
             return hotelRepository.save(hotel);
         }
         return null;

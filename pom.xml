@@ -29,6 +29,8 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
+
 	<dependencies>
 		<!-- Google API Client -->
 		<dependency>
@@ -65,6 +67,22 @@
 			<version>0.9.1</version>
 		</dependency>
 
+<!--them thu vien gui mail-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+<!--them thu vien tao pdf-->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
 
 
@@ -77,6 +95,10 @@
 
 
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>

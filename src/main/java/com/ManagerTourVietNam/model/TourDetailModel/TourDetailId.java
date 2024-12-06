@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 public class TourDetailId implements Serializable {
 
+    private String idtourdetail;
     private String idtour;
     private String id_vehicles;
     private String id_service;
@@ -11,16 +12,25 @@ public class TourDetailId implements Serializable {
     public TourDetailId() {
 
     }
-    public TourDetailId(String idtour) {
-        this.idtour = idtour;
-    }
+//    public TourDetailId(String idtour) {
+//        this.idtour = idtour;
+//    }
 
 
-    public TourDetailId(String idtour, String id_vehicles, String id_hotel, String id_service) {
+    public TourDetailId(String idtourdetail, String idtour, String id_vehicles, String id_hotel, String id_service) {
+        this.idtourdetail = idtourdetail;
         this.idtour = idtour;
         this.id_vehicles = id_vehicles;
         this.id_hotel = id_hotel;
         this.id_service = id_service;
+    }
+
+    public String getIdtourdetail() {
+        return idtourdetail;
+    }
+
+    public void setIdtourdetail(String idtourdetail) {
+        this.idtourdetail = idtourdetail;
     }
 
     public String getIdtour() {

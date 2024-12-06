@@ -19,7 +19,7 @@ public class Hotel {
     @Column(name = "status")
     private boolean status; // tương ứng với cột 'status' (giá trị boolean)
     @Column(name = "price")
-    private double price;
+    private int price;
 
     public  Hotel()
     {
@@ -69,7 +69,7 @@ public class Hotel {
     }
 
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -77,7 +77,7 @@ public class Hotel {
         this.price = price;
     }
 
-    public Hotel(String id_hotel, String name_hotel, String description, String image, boolean status, double price) {
+    public Hotel(String id_hotel, String name_hotel, String description, String image, boolean status, int price) {
         this.id_hotel = id_hotel;
         this.name_hotel = name_hotel;
         this.description = description;
