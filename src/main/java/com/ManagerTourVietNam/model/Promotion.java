@@ -4,11 +4,17 @@ import jakarta.persistence.*;
 @Table(name = "promotion")
 public class Promotion {
     @Id
+    @Column(name = "promotion_code")  // Đảm bảo rằng tên cột là đúng
     private String promotion_code;
+    @Column(name = "code")
     private String code;
+    @Column(name = "name")  // Đảm bảo rằng tên cột là đúng
     private String name;
+    @Column(name = "description")  // Đảm bảo rằng tên cột là đúng
     private String description;
+    @Column(name = "status")
     private boolean status;
+    @Column(name = "discount")
     private double discount;
     public Promotion(){}
     public double getDiscount() { return discount; }

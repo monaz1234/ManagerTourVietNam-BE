@@ -10,11 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookDerailService {
@@ -28,6 +27,41 @@ public class BookDerailService {
     public BookDetail addbookDetail(BookDetail bookDetail){
         return bookdetailReponsitory.save(bookDetail);
     }
+
+    @Transactional
+    public String generateNextBookDetailId() {
+        List<String> existingIds = bookdetailReponsitory.findAll().stream()
+                .map(BookDetail::getIdbookdetail)
+                .collect(Collectors.toList());
+
+        List<String> missingIds = findMissingIds(existingIds, "D");
+        if (!missingIds.isEmpty()) {
+            return missingIds.get(0);
+        }
+
+        int maxId = existingIds.stream()
+                .map(id -> Integer.parseInt(id.substring(1))) // Parse số từ ID (vd: từ "D001" -> 1)
+                .max(Integer::compare)
+                .orElse(0);
+
+        return "D" + String.format("%03d", maxId + 1);
+    }
+
+    private List<String> findMissingIds(List<String> existingIds, String prefix) {
+        List<Integer> allIds = existingIds.stream()
+                .map(id -> Integer.parseInt(id.substring(1))) // Lấy số
+                .sorted()
+                .collect(Collectors.toList());
+
+        List<String> missingIds = new ArrayList<>();
+        for (int i = 1; i <= Collections.max(allIds); i++) {
+            if (!allIds.contains(i)) {
+                missingIds.add(prefix + String.format("%03d", i));
+            }
+        }
+        return missingIds;
+    }
+
 
     public BookDetail updateBookDetail(String id, BookDetail bookDetailDataDetail){
         Optional<BookDetail> optionalBookDetail = bookdetailReponsitory.findById(id);

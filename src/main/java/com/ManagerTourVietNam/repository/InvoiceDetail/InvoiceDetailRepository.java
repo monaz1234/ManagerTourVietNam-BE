@@ -20,5 +20,10 @@ public interface InvoiceDetailRepository extends JpaRepository<invoice_detail, S
             @Param("idtour") String idtour
     );
 
+    @Query("SELECT i FROM invoice_detail i WHERE i.idinvoice.idinvoice = :idinvoice")
+    List<invoice_detail> findByIdinvoice_IdInvoice(@Param("idinvoice") String idinvoice);
+
+
+
 
 }

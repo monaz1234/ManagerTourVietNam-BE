@@ -3,6 +3,7 @@ package com.ManagerTourVietNam.controller.AccountController;
 import com.ManagerTourVietNam.model.Account;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.AccountRepository;
+import com.ManagerTourVietNam.repository.TypeTourRepository.TypeTourRepository;
 import com.ManagerTourVietNam.service.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +45,9 @@ public class AccountController {
     private AccountRepository accountRepository;
     @Autowired
     private ResourceLoader resourceLoader;
+
+    @Autowired
+    private TypeTourRepository typeTourRepository;
     String dirIUploadImageAccount = System.getProperty("user.dir") + "/public/image/account/";
 
     @GetMapping("api/accounts")
@@ -92,6 +96,9 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
+
+
+
     // @PostMapping("/api/account/login")
     // public ResponseEntity<?> login(@RequestBody Account account) {
     // Optional<Account> foundAccount =
@@ -105,18 +112,72 @@ public class AccountController {
     // }
     // }
 
+//    @PostMapping("/api/account/login")
+//    public ResponseEntity<?> login(@RequestBody Map<String, String> loginPayload) {
+//        String username = loginPayload.get("username");
+//        String password = loginPayload.get("password");
+//
+//        Account account = accountService.validateLogin(username, password);
+//        if (account != null) {
+//            return ResponseEntity.ok(account);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Thông tin đăng nhập không chính xác.");
+//        }
+//    }
+
     @PostMapping("/api/account/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginPayload) {
         String username = loginPayload.get("username");
         String password = loginPayload.get("password");
 
+        // Gọi service để xác thực tài khoản
         Account account = accountService.validateLogin(username, password);
+
         if (account != null) {
-            return ResponseEntity.ok(account);
+            // Lấy thông tin idtypeuser dựa trên username
+            Optional<String> idTypeUser = accountService.getIdTypeUserByUsername(username);
+
+            // Kiểm tra và trả về dữ liệu
+            if (idTypeUser.isPresent()) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("account", account);
+                response.put("idTypeUser", idTypeUser.get());
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Không tìm thấy loại người dùng cho tài khoản này.");
+            }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Thông tin đăng nhập không chính xác.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Thông tin đăng nhập không chính xác.");
         }
     }
+
+//    @PostMapping("/api/account/login")
+//    public ResponseEntity<?> login(@RequestBody Map<String, String> loginPayload) {
+//        String username = loginPayload.get("username");
+//        String password = loginPayload.get("password");
+//
+//        // Xác thực tài khoản
+//        Account account = accountService.validateLogin(username, password);
+//
+//        if (account != null) {
+//            // Trả về thông tin tài khoản cơ bản
+//            Map<String, Object> response = new HashMap<>();
+//            response.put("idaccount", account.getIdaccount());
+//            response.put("username", account.getUsername());
+//            return ResponseEntity.ok(response);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                    .body("Thông tin đăng nhập không chính xác.");
+//        }
+//    }
+
+
+
+
+
+
     @GetMapping("/api/accounts/iduser")
     public ResponseEntity<?> getIdUserByUsername(@RequestParam String username) {
         Optional<String> idUser = accountService.findIdUserByUsername(username);
@@ -220,6 +281,17 @@ public class AccountController {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
+    }
+
+
+        @GetMapping("api/account/username/{username}")
+    public ResponseEntity<Account> getAccountByUsername(@PathVariable String username) {
+        try {
+            Account account = accountService.getAccountByUsername(username);
+            return ResponseEntity.ok(account);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
 

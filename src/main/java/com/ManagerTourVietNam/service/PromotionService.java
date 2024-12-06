@@ -3,7 +3,10 @@ import com.ManagerTourVietNam.model.Promotion;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.PromotionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +14,7 @@ import java.util.Optional;
 public class PromotionService {
     @Autowired
     private PromotionRepository promotionRepository;
+
     // danh sách người dùng
     public List<Promotion> getAllPromotion(){
         return promotionRepository.findAll();
@@ -51,4 +55,11 @@ public class PromotionService {
     public Optional<Promotion> findByCode(String code) {
         return promotionRepository.findByCode(code);
     }
+
+    public List<Promotion> findByCodePromotion(String code) {
+        return promotionRepository.findByCodePromotion(code);
+    }
+
+
+
 }

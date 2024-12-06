@@ -57,6 +57,24 @@ public class PromotionController {
         return promotionService.searchPromotions(query);
     }
 
+    @GetMapping("api/promotion/code/{code}")
+    public ResponseEntity<?> getPromotionByCode(@PathVariable String code) {
+        List<Promotion> promotions = promotionService.findByCodePromotion(code);
+
+        if (promotions.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else if (promotions.size() == 1) {
+            return ResponseEntity.ok(promotions.get(0)); // Trả về 1 khuyến mãi nếu chỉ có 1 kết quả
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Found multiple promotions with the same code"); // Nếu có nhiều kết quả
+        }
+    }
+
+
+
+
+
+
 
 
 

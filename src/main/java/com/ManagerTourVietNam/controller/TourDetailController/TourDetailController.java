@@ -12,6 +12,7 @@ import com.ManagerTourVietNam.controller.ApplyPromotionRequest;
 import com.ManagerTourVietNam.model.Promotion;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourModel.Tour;
+import com.ManagerTourVietNam.service.BookService.SequenceGeneratorService;
 import com.ManagerTourVietNam.service.PromotionService;
 
 import com.ManagerTourVietNam.service.TourDetailService.TourDetailService;
@@ -49,6 +50,29 @@ public class TourDetailController {
 
     @Autowired
     private PromotionService promotionService;
+
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
+
+    @PostMapping("tour_detail/create")
+    public ResponseEntity<TourDetail> createTourdetail(@RequestBody TourDetail tourDetail) {
+        // Tạo mã ID tự động
+
+        //String generatedId = sequenceGeneratorService.generateBookId();
+        if (tourDetail.getIdtourdetail() == null || tourDetail.getIdtourdetail().isEmpty()) {
+            String generatedId = sequenceGeneratorService.generateTourDetailId();
+            tourDetail.setIdtourdetail(generatedId);
+        }
+        // Gán mã ID cho Book
+        //book.setIdbook(generatedId);
+
+        // Lưu vào cơ sở dữ liệu
+        TourDetail savedTourDetail = tourDetailRepository.save(tourDetail);
+
+        return ResponseEntity.ok(savedTourDetail);
+    }
+
 
     // get all tour
     @GetMapping("/tour_detail")
@@ -90,32 +114,46 @@ public class TourDetailController {
 
     }
 
-
-
-
-
     @PostMapping("/apply-promotion")
     public ResponseEntity<Map<String, Object>> applyPromotion(@RequestBody ApplyPromotionRequest request) {
         Optional<TourDetail> optionalTourDetail = tourDetailService.getTourDetailById(request.getIdtour());
+
+        // Kiểm tra mã khuyến mãi trong database
+        Optional<Promotion> promotion = promotionService.findByCode(request.getCode());
         System.out.println("Request nhận được: idtour=" + request.getIdtour() + ", code=" + request.getCode() + ", quantity=" + request.getQuantity());
+
         if (optionalTourDetail.isPresent()) {
             TourDetail tourDetail = optionalTourDetail.get();
 
+            // Kiểm tra nếu số lượng chỗ trống là 0
+            if (tourDetail.getPlace() <= 0) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("error", "Tour đã hết chỗ. Không thể đặt thêm.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            String promotionCode = promotion.get().getPromotion_code();
+            System.out.println("promotion_code: " + promotionCode); // Log giá trị promotion_code
+
             double basePrice = tourDetail.getTotal_price();
             System.out.println("Base Price: " + basePrice); // Log giá trị basePrice
+
             double discount = checkPromotionCode(request.getCode(), basePrice);
             double finalPrice = (basePrice * request.getQuantity()) - discount;
 
-            /* Cập nhật số lượng chỗ trống
+            // Cập nhật số lượng chỗ trống
             int updatedPlace = tourDetail.getPlace() - request.getQuantity();
             tourDetail.setPlace(updatedPlace);
-            tourDetailService.saveTourDetail(tourDetail);*/
+            tourDetailService.saveTourDetail(tourDetail);
 
             Map<String, Object> response = new HashMap<>();
             response.put("finalPrice", finalPrice);
             response.put("discount", discount);
+            response.put("promotion_code", promotionCode);
+
             System.out.println("Final Price: " + finalPrice);
             System.out.println("Discount: " + discount);
+            System.out.println("promotion_code: " + promotionCode);
             //response.put("remainingPlace", updatedPlace);
 
             return ResponseEntity.ok(response);
@@ -135,6 +173,48 @@ public class TourDetailController {
             return 0;
         }
     }
+
+
+    @PutMapping("/tour_detail/update/{id}")
+    public ResponseEntity<?> updateTourDetail(@PathVariable String id, @RequestBody TourDetail updatedTourDetail) {
+        // Tìm kiếm TourDetail hiện tại theo ID
+        Optional<TourDetail> existingTourDetailOptional = tourDetailRepository.findByIdtour(id);
+
+        if (existingTourDetailOptional.isPresent()) {
+            TourDetail existingTourDetail = existingTourDetailOptional.get();
+
+            // Cập nhật các trường từ `updatedTourDetail`
+            existingTourDetail.setTour(updatedTourDetail.getTour());
+            existingTourDetail.setPlace(updatedTourDetail.getPlace());
+            existingTourDetail.setHotel(updatedTourDetail.getHotel());
+            existingTourDetail.setVehicles(updatedTourDetail.getVehicles());
+            existingTourDetail.setService(updatedTourDetail.getService());
+            existingTourDetail.setTotal_price(updatedTourDetail.getTotal_price());
+
+            // Lưu thông tin cập nhật vào cơ sở dữ liệu
+            TourDetail savedTourDetail = tourDetailRepository.save(existingTourDetail);
+
+            return ResponseEntity.ok(savedTourDetail);
+        } else {
+            // Nếu không tìm thấy, trả về lỗi 404
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("TourDetail không tồn tại với ID: " + id);
+        }
+    }
+
+    @GetMapping("/Find/tour_detail/{idtour}")
+    public ResponseEntity<?> getTourDetailsByIdtour(@PathVariable String idtour) {
+        List<TourDetail> tourDetails = tourDetailService.getSingleTourDetailByIdtour(idtour); // Lấy danh sách
+        if (tourDetails.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No tour details found for idtour: " + idtour);
+        }
+        return ResponseEntity.ok(tourDetails);
+    }
+
+
+
+
+
+
 
 
 

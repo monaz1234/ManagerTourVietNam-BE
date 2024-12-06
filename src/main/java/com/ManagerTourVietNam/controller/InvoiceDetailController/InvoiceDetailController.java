@@ -87,4 +87,9 @@ public class InvoiceDetailController {
         return new ResponseEntity<>(invoice_details, HttpStatus.OK);
     }
 
+    @GetMapping("/api/invoice-details/{idinvoice}")
+    public List<invoice_detail> getInvoiceDetails(@PathVariable String idinvoice) {
+        return invoiceDetailService.getInvoiceDetailsByIdInvoice(idinvoice);
+    }
+
 }

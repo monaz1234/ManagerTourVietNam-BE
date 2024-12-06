@@ -5,6 +5,7 @@ import com.ManagerTourVietNam.model.BookDetail.BookDetail;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.BookDetailReponsitory.BookDetailReponsitory;
 import com.ManagerTourVietNam.service.BookDetailService.BookDerailService;
+import com.ManagerTourVietNam.service.BookService.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,15 +27,30 @@ public class BookDetailController {
     @Autowired
     private BookDetailReponsitory bookDetailReponsitory;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @GetMapping("api/bookdetails")
     public List<BookDetail> getbookdetails(){
         return bookDerailService.getAllBookDetails();
     }
 
-    @PostMapping("api/bookdetail")
-    public BookDetail addbookdetails(@RequestBody BookDetail bookDetail){
-        return bookDerailService.addbookDetail(bookDetail);
+
+    @PostMapping("api/bookdetail/create")
+    public ResponseEntity<BookDetail> createBookDetail(@RequestBody BookDetail bookDetail) {
+        if (bookDetail.getIdbookdetail() == null || bookDetail.getIdbookdetail().isEmpty()) {
+            String generatedId = sequenceGeneratorService.generateBookDetailId();
+            bookDetail.setIdbookdetail(generatedId);  // Tạo ID tự động
+        }
+        BookDetail savedBookDetail = bookDetailReponsitory.save(bookDetail);
+        return ResponseEntity.ok(savedBookDetail);
     }
+
+
+//    @PostMapping("api/bookdetail")
+//    public BookDetail addbookdetails(@RequestBody BookDetail bookDetail){
+//        return bookDerailService.addbookDetail(bookDetail);
+//    }
 
     @PutMapping("api/bookdetail/{id}")
     public ResponseEntity<BookDetail> updatedBookDetail(@PathVariable String id, @RequestBody BookDetail bookDetail) {
