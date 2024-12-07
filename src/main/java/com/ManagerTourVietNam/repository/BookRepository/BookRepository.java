@@ -10,6 +10,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
 //    Page<Book> findByNameContaining(String name, Pageable pageable);
         List<Book> findByIdbookContainingOrTour_TournameContainingOrAccount_UsernameContaining(
         String idbook, String tourname, String username);
+
         @Query("SELECT b.idbook FROM Book b")
         List<String> getAllBookIds();
 

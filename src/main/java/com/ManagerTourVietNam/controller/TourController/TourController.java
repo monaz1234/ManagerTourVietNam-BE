@@ -8,13 +8,21 @@ import com.ManagerTourVietNam.service.TourDetailService.TourDetailService;
 import com.ManagerTourVietNam.service.TourService.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetailId;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +37,9 @@ public class TourController {
     private TourService tourService;
     @Autowired
     private TourRepository tourRepository;
+    @Autowired
+    private ResourceLoader resourceLoader;
+    String dirIUploadImageTour = System.getProperty("user.dir") + "/public/image/tour/";
 
 
     // get all tour
@@ -56,11 +67,17 @@ public class TourController {
         }
     }
     // delete by id
+//    @DeleteMapping("/tour/delete_tour/{id}")
+//    public ResponseEntity<Map<String, Object>> deleteTour(@PathVariable String id)
+//    {
+//        return  tourService.deleteTour(id);
+//    }
+
     @DeleteMapping("/tour/delete_tour/{id}")
-    public ResponseEntity<Map<String, Object>> deleteTour(@PathVariable String id)
-    {
-        return  tourService.deleteTour(id);
+    public void deleteTour(@PathVariable String id){
+        tourService.deleteTour(id);
     }
+
     // thêm tour
     @PostMapping("/tour/add_tour")
     public Tour addTour(@RequestBody Tour tour)
@@ -121,5 +138,70 @@ public class TourController {
                 .collect(Collectors.toList());
     }
 //
+
+
+    //upload anh cua hotel vao folder image/vehicle
+    @PostMapping("/tour/image/upload")
+    public ResponseEntity<?> uploadImageTour(@RequestParam("file") MultipartFile file, @RequestParam("tourName") String tourName) {
+        // Kiểm tra nếu file không rỗng
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", "Vui lòng chọn một file để upload."));
+        }
+
+        try {
+            // Lấy tên file từ vehicleName và gán định dạng PNG hoặc JPG
+            String fileName = "img_" + tourName + ".png"; // hoặc JPG nếu cần
+
+            // Lưu file vào thư mục
+
+            File uploadDirFile = new File(dirIUploadImageTour);
+            if (!uploadDirFile.exists()) {
+                uploadDirFile.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+            }
+
+            File destinationFile = new File(dirIUploadImageTour + fileName);
+            file.transferTo(destinationFile);
+
+            return ResponseEntity.ok(Collections.singletonMap("message", "Tải lên thành công: " + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("message", "Đã xảy ra lỗi khi tải lên hình ảnh: " + e.getMessage()));
+        }
+    }
+
+    // Lấy hình ảnh
+    @GetMapping("/tour/images/{imageName}")
+    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+
+        Resource resource = resourceLoader.getResource("file:" + dirIUploadImageTour + imageName);
+
+        if (!resource.exists()) {
+            return ResponseEntity.notFound().build(); // Trả về 404 nếu hình ảnh không tồn tại
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+
+    @DeleteMapping("/tour/images/{imageName}")
+    public ResponseEntity<?> deleteImage(@PathVariable String imageName) {
+        File file = new File(dirIUploadImageTour + imageName);
+
+        // Kiểm tra xem file có tồn tại không
+        if (!file.exists()) {
+            return ResponseEntity.notFound().build(); // Trả về 404 nếu hình ảnh không tồn tại
+        }
+
+        // Thực hiện xóa file
+        if (file.delete()) {
+            return ResponseEntity.ok(Collections.singletonMap("message", "Xóa hình ảnh thành công: " + imageName));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("message", "Đã xảy ra lỗi khi xóa hình ảnh."));
+        }
+    }
 
 }

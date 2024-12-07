@@ -38,11 +38,6 @@ public class InoviceController {
     private SequenceGeneratorService sequenceGeneratorService;
     @Autowired
     private InvoiceRepository invoiceRepository;
-//    @PostMapping("/create")
-//    public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice) {
-//        Invoice savedInvoice = invoiceService.createInvoice(invoice);
-//        return ResponseEntity.ok(savedInvoice);
-//    }
     @PostMapping("/invoice/create")
     public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice) {
         // Tạo mã ID tự động
@@ -151,18 +146,6 @@ public class InoviceController {
     public String cancelPay() {
         return "Thanh toán đã bị hủy!";
     }
-//    @PostMapping("/momo-payment")
-//    public ResponseEntity<String> processMomoPayment(@RequestBody Invoice invoice) {
-//        // Giả lập xử lý thanh toán Momo (cần tích hợp SDK hoặc API Momo thực tế)
-//        boolean paymentSuccess = momoService.processPayment(invoice);
-//        if (paymentSuccess) {
-//            invoice.setStatus(1); // Đặt trạng thái đã thanh toán thành công
-//            invoiceService.createInvoice(invoice);
-//            return ResponseEntity.ok("Thanh toán qua Momo thành công!");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Thanh toán qua Momo thất bại.");
-//        }
-//    }
 
 //    @GetMapping("/api/invoices")
 //    public List<Invoice> GetAllInvoice() {

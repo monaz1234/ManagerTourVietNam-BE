@@ -34,6 +34,9 @@ public class TourDetailService {
         }
         return tourDetails;
     }
+    public List<TourDetail> getSingleTourDetailByIdtour(String idtour) {
+        return tourDetailRepository.findSingleByIdtour(idtour);
+    }
 
     public double getServicePrice(String idtour) {
         return tourDetailRepository.findServicePriceByTourId(idtour);
@@ -69,12 +72,12 @@ public class TourDetailService {
         return tourDetailRepository.save(tourDetail);
     }
 
-    public TourDetail updateTourDetail(String idtour, String id_vehicles, String id_hotel, String id_service,
+    public TourDetail updateTourDetail(String idtourdetail,String idtour, String id_vehicles, String id_hotel, String id_service,
             TourDetail tourSupDetails)
             throws UserPrincipalNotFoundException {
 
         // Tạo đối tượng TourDetailId từ các thông tin
-        TourDetailId tourDetailId = new TourDetailId(idtour, id_vehicles, id_hotel, id_service);
+        TourDetailId tourDetailId = new TourDetailId(idtourdetail ,idtour, id_vehicles, id_hotel, id_service);
 
         return tourDetailRepository.findById(tourDetailId).map(tourDetailSub -> {
             // Cập nhật các trường
@@ -106,8 +109,8 @@ public class TourDetailService {
         }).orElseThrow(() -> new UserPrincipalNotFoundException("Tour detail not found with id " + tourDetailId));
     }
 
-    public void deleteTourDetail(String idtour, String id_vehicles, String id_hotel, String id_service) {
-        TourDetailId tourDetailId = new TourDetailId(idtour, id_vehicles, id_hotel, id_service);
+    public void deleteTourDetail(String idtourdetail,String idtour, String id_vehicles, String id_hotel, String id_service) {
+        TourDetailId tourDetailId = new TourDetailId(idtourdetail ,idtour, id_vehicles, id_hotel, id_service);
         tourDetailRepository.deleteById(tourDetailId);
     }
 

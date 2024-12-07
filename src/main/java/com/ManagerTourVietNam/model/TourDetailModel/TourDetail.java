@@ -12,6 +12,10 @@ import com.ManagerTourVietNam.model.TourModel.Tour;
 public class TourDetail {
 
     @Id
+    @Column(name = "idtourdetail", length = 4)
+    private String idtourdetail;
+
+    @Id
     @Column(name = "idtour",  length = 4)
     private String idtour;
     @Id
@@ -96,7 +100,25 @@ public class TourDetail {
         this.is_deleted = is_deleted;
     }
 
-    public TourDetail(String idtour, String id_vehicles, String id_hotel, String id_service, LocalDate depart, double total_price, int place, boolean is_deleted) {
+    public String getIdtourdetail() {
+        return idtourdetail;
+    }
+
+    public void setIdtourdetail(String idtourdetail) {
+        this.idtourdetail = idtourdetail;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public TourDetail()
+    {
+
+    }
+
+    public TourDetail(String idtourdetail, String idtour, String id_vehicles, String id_hotel, String id_service, LocalDate depart, double total_price, int place, boolean is_deleted, Tour tour, Vehicles vehicles, Hotel hotel, Service service) {
+        this.idtourdetail = idtourdetail;
         this.idtour = idtour;
         this.id_vehicles = id_vehicles;
         this.id_hotel = id_hotel;
@@ -105,12 +127,13 @@ public class TourDetail {
         this.total_price = total_price;
         this.place = place;
         this.is_deleted = is_deleted;
+        this.tour = tour;
+        this.vehicles = vehicles;
+        this.hotel = hotel;
+        this.service = service;
     }
 
-    public TourDetail()
-    {
 
-    }
     @ManyToOne
     @JoinColumn(name = "idtour", insertable = false, updatable = false)
     private Tour tour;

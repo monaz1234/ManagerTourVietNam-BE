@@ -77,34 +77,38 @@ public class TourService {
 
 
     // xóa tour theo id
-    public ResponseEntity<Map<String, Object>> deleteTour(String id)
-    {
-        Optional<Tour> optionalTour = tourRepository.findById(id);
-        Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(id);
-        if(optionalTour.isPresent() && optionalTourDetail.isPresent())
-        {
-            Tour tour = optionalTour.get();
-            TourDetail tourDetail = optionalTourDetail.get();
-            if(!tour.isIs_deleted() && !tourDetail.isIs_deleted())
-            {
-                //đánh dấu đã xóa mềm
-                tour.setIs_deleted(true);
-                tourDetail.setIs_deleted(true);
-                // lưu
-                Tour updatedTour = tourRepository.save(tour);
-                TourDetail updatedTourDetail = tourDetailRepository.save(tourDetail);
-                // tạo map trả về 2 đối tượng
-                Map<String, Object> response = new HashMap<>();
-                response.put("updatedTour", updatedTour);
-                response.put("updatedTourDetail", updatedTourDetail);
+//    public ResponseEntity<Map<String, Object>> deleteTour(String id)
+//    {
+//        Optional<Tour> optionalTour = tourRepository.findById(id);
+//        Optional<TourDetail> optionalTourDetail = tourDetailRepository.findByIdtour(id);
+//        if(optionalTour.isPresent() && optionalTourDetail.isPresent())
+//        {
+//            Tour tour = optionalTour.get();
+//            TourDetail tourDetail = optionalTourDetail.get();
+//            if(!tour.isIs_deleted() && !tourDetail.isIs_deleted())
+//            {
+//                //đánh dấu đã xóa mềm
+//                tour.setIs_deleted(true);
+//                tourDetail.setIs_deleted(true);
+//                // lưu
+//                Tour updatedTour = tourRepository.save(tour);
+//                TourDetail updatedTourDetail = tourDetailRepository.save(tourDetail);
+//                // tạo map trả về 2 đối tượng
+//                Map<String, Object> response = new HashMap<>();
+//                response.put("updatedTour", updatedTour);
+//                response.put("updatedTourDetail", updatedTourDetail);
+//
+//                return new ResponseEntity<>(response,HttpStatus.OK);
+//
+//            }else {
+//                return new ResponseEntity<>(HttpStatus.CONFLICT);
+//            }
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 
-                return new ResponseEntity<>(response,HttpStatus.OK);
-
-            }else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public void deleteTour(String id) {
+        tourRepository.deleteById(id);
     }
     // thêm tour
     public Tour addTour(Tour tour)

@@ -3,6 +3,7 @@ package com.ManagerTourVietNam.controller.AccountController;
 import com.ManagerTourVietNam.model.Account;
 import com.ManagerTourVietNam.model.User;
 import com.ManagerTourVietNam.repository.AccountRepository;
+import com.ManagerTourVietNam.repository.TypeTourRepository.TypeTourRepository;
 import com.ManagerTourVietNam.service.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +45,9 @@ public class AccountController {
     private AccountRepository accountRepository;
     @Autowired
     private ResourceLoader resourceLoader;
+
+    @Autowired
+    private TypeTourRepository typeTourRepository;
     String dirIUploadImageAccount = System.getProperty("user.dir") + "/public/image/account/";
 
     @GetMapping("api/accounts")
@@ -149,6 +153,29 @@ public class AccountController {
                     .body("Thông tin đăng nhập không chính xác.");
         }
     }
+
+//    @PostMapping("/api/account/login")
+//    public ResponseEntity<?> login(@RequestBody Map<String, String> loginPayload) {
+//        String username = loginPayload.get("username");
+//        String password = loginPayload.get("password");
+//
+//        // Xác thực tài khoản
+//        Account account = accountService.validateLogin(username, password);
+//
+//        if (account != null) {
+//            // Trả về thông tin tài khoản cơ bản
+//            Map<String, Object> response = new HashMap<>();
+//            response.put("idaccount", account.getIdaccount());
+//            response.put("username", account.getUsername());
+//            return ResponseEntity.ok(response);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                    .body("Thông tin đăng nhập không chính xác.");
+//        }
+//    }
+
+
+
 
 
 
