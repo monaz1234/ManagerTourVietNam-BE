@@ -2,9 +2,12 @@ package com.ManagerTourVietNam.model.Book;
 
 import com.ManagerTourVietNam.model.Account;
 import com.ManagerTourVietNam.model.TourModel.Tour;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idbook")
 @Table(name = "BOOK")
 public class Book {
     @Id

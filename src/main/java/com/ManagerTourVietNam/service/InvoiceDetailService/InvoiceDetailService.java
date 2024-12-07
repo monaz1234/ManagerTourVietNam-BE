@@ -1,5 +1,4 @@
 package com.ManagerTourVietNam.service.InvoiceDetailService;
-import com.ManagerTourVietNam.model.invoice.invoice;
 import com.ManagerTourVietNam.repository.InvoiceDetail.InvoiceDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

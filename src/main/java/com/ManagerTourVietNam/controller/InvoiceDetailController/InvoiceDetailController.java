@@ -3,7 +3,6 @@ package com.ManagerTourVietNam.controller.InvoiceDetailController;
 
 import com.ManagerTourVietNam.model.inovice_detail.invoice_detail;
 
-import com.ManagerTourVietNam.model.invoice.invoice;
 import com.ManagerTourVietNam.repository.InvoiceDetail.InvoiceDetailRepository;
 import com.ManagerTourVietNam.service.InvoiceDetailService.InvoiceDetailService;
 import org.springframework.beans.factory.annotation.Autowired;

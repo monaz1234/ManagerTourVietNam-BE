@@ -45,7 +45,7 @@ public class AuthController {
             GoogleIdToken idToken = verifier.verify(token);
             if (idToken != null) {
                 GoogleIdToken.Payload payload = idToken.getPayload();
-
+                System.out.println(idToken); // Token không hợp lệ
                 // Lấy thông tin user từ token
                 String userId = payload.getSubject();
                 String email = payload.getEmail();
@@ -68,7 +68,6 @@ public class AuthController {
                 userInfo.put("email", email);
                 userInfo.put("name", name);
                 userInfo.put("picture", picture);
-
                 return ResponseEntity.ok(userInfo);
             } else {
                 System.out.println("Invalid token"); // Token không hợp lệ

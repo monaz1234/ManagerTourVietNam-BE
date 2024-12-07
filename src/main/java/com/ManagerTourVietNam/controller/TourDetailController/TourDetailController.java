@@ -1,31 +1,23 @@
 package com.ManagerTourVietNam.controller.TourDetailController;
 
 
-import com.ManagerTourVietNam.model.Book.Book;
-import com.ManagerTourVietNam.model.BookDetail.BookDetail;
 import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
 import com.ManagerTourVietNam.model.TourModel.Tour;
-import com.ManagerTourVietNam.model.invoice.invoice;
 import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
 
 import com.ManagerTourVietNam.controller.ApplyPromotionRequest;
 import com.ManagerTourVietNam.model.Promotion;
-import com.ManagerTourVietNam.model.TourDetailModel.TourDetail;
-import com.ManagerTourVietNam.model.TourModel.Tour;
 import com.ManagerTourVietNam.service.PromotionService;
 
 import com.ManagerTourVietNam.service.TourDetailService.TourDetailService;
 import com.ManagerTourVietNam.service.TourService.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.ManagerTourVietNam.repository.TourDetailRepository.TourDetailRepository;
-import java.text.DecimalFormat;
+
 import java.util.HashMap;
 import java.util.List;
 

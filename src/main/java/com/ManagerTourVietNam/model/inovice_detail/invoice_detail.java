@@ -2,7 +2,7 @@ package com.ManagerTourVietNam.model.inovice_detail;
 
 import com.ManagerTourVietNam.model.Book.Book;
 import com.ManagerTourVietNam.model.TourModel.Tour;
-import com.ManagerTourVietNam.model.invoice.invoice;
+import com.ManagerTourVietNam.model.invoice.Invoice;
 
 import jakarta.persistence.*;
 
@@ -15,7 +15,7 @@ public class invoice_detail {
 
     @ManyToOne
     @JoinColumn(name = "ID_Invoice" ,referencedColumnName = "ID_Invoice")
-    private invoice idinvoice;
+    private Invoice idinvoice;
 
     @ManyToOne
     @JoinColumn(name = "IDBook", referencedColumnName = "IDBook")
@@ -42,11 +42,11 @@ public class invoice_detail {
         this.idvoicedetail = idvoicedetail;
     }
 
-    public invoice getIdinvoice() {
+    public Invoice getIdinvoice() {
         return idinvoice;
     }
 
-    public void setIdinvoice(invoice idinvoice) {
+    public void setIdinvoice(Invoice idinvoice) {
         this.idinvoice = idinvoice;
     }
 

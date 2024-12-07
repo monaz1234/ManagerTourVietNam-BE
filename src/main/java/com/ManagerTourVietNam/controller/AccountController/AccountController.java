@@ -128,6 +128,7 @@ public class AccountController {
 
         // Gọi service để xác thực tài khoản
         Account account = accountService.validateLogin(username, password);
+        System.out.println("Login response: " + account.getIdaccount());
 
         if (account != null) {
             // Lấy thông tin idtypeuser dựa trên username
@@ -178,6 +179,7 @@ public class AccountController {
     @PostMapping("/api/account/image/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file,
             @RequestParam("accountName") String accountName) {
+        System.out.println("accountName: " + accountName); // Log giá trị account
         // Kiểm tra nếu file không rỗng
         if (file.isEmpty()) {
             return ResponseEntity.badRequest()
@@ -197,6 +199,19 @@ public class AccountController {
 
             File destinationFile = new File(dirIUploadImageAccount + fileName);
             file.transferTo(destinationFile);
+
+            // Cập nhật tên file vào cơ sở dữ liệu (cột image trong bảng Account)
+            Optional<Account> accountOptional = accountService.findAccountById(accountName);
+            if (accountOptional.isPresent()) {
+                Account account = accountOptional.get();
+                account.setImage(fileName); // Set tên file vào tài khoản
+
+                // Lưu cập nhật vào cơ sở dữ liệu
+                accountService.updateAccount(account.getIdaccount(), account);
+            } else {
+                return ResponseEntity.badRequest()
+                        .body(Collections.singletonMap("message", "Tài khoản không tồn tại."));
+            }
 
             return ResponseEntity.ok(Collections.singletonMap("message", "Tải lên thành công: " + fileName));
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package com.ManagerTourVietNam.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Type;
@@ -7,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idaccount")
 @Table(name = "ACCOUNT")
 public class Account {
     @Id

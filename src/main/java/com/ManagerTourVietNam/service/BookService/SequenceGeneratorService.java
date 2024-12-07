@@ -3,6 +3,7 @@ package com.ManagerTourVietNam.service.BookService;
 import com.ManagerTourVietNam.repository.BookDetailReponsitory.BookDetailReponsitory;
 import com.ManagerTourVietNam.repository.BookRepository.BookRepository;
 import com.ManagerTourVietNam.repository.BookRepository.SequenceGeneratorRepository;
+import com.ManagerTourVietNam.repository.InvoiceRepository.InvoiceRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class SequenceGeneratorService {
 
     @Autowired
     private BookDetailReponsitory bookDetailRepository;
+    @Autowired
+    private InvoiceRepository invoiceRepository;
 
     @Transactional
     public String generateBookId() {
@@ -26,10 +29,14 @@ public class SequenceGeneratorService {
     }
 
     @Transactional
+    public String generateInvoiceId() {
+        return generateId("I", "invoice_seq", invoiceRepository.getAllInvoiceIds());
+    }
+
+    @Transactional
     public String generateBookDetailId() {
         return generateId("D", "bookdetail_seq", bookDetailRepository.getAllBookDetailIds());
     }
-
     private String generateId(String prefix, String sequenceName, List<String> existingIds) {
         // Tìm mã trống
         for (int i = 1; i <= existingIds.size() + 1; i++) {
